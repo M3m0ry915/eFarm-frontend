@@ -9,13 +9,3 @@ Currently, two official plugins are available:
 
 ## Dokumentacja Frontend
 
-## Dokumentacja CI
-
-### Linting, Vulnerability Scanning and Building
-
-CI bedzie sie triggerowac gdy bedzie pull request(merge request) do `dev` z branch `feature/*` lub `bugfix/*`
-
-Instalacja nastepuje z pliku pakcage-lock.json a zeby zmieniac go robi sie to z `npm install`.
-Jest tam uzyty domyslnie zainstalowany eslint,npm audit, secret-scanning oraz codeQL.
-
-Jest mozliwosc pojawienia sie **false-positives** wiec nie wszystkie bledy przez wyzej wymienione narzedzia musza byc bledami.

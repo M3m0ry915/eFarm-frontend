@@ -1,63 +1,63 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
-import PropTypes from 'prop-types';
+import { AuthContext } from '../../AuthContext.jsx';
 
-const EquipmentDetail = ({ onLogout }) => {
+const EquipmentDetail = () => {
     const { id } = useParams();
     const [equipmentData, setEquipmentData] = useState(null);
     const [userRole, setUserRole] = useState('');
-    const [username, setUsername] = useState('');
+    const { userRoles, username, isAuthenticated } = useContext(AuthContext);
     const navigate = useNavigate();
 
+
     useEffect(() => {
-        const storedRoles = sessionStorage.getItem('roles');
-        const username = sessionStorage.getItem('username');
-
-        setUsername(username);
-
-        if (!username || !storedRoles) {
+        if (!isAuthenticated) {
             navigate('/sign-in');
             return;
         }
 
-        const roles = JSON.parse(storedRoles);
-
-        if (roles.includes('ROLE_FARM_MANAGER') || roles.includes('ROLE_FARM_OWNER')) {
-            setUserRole('MANAGER_OR_OWNER');
+        // Set userRole based on userRoles
+        if (userRoles.includes('ROLE_FARM_OWNER')) {
+            setUserRole('OWNER');
+        } else if (userRoles.includes('ROLE_FARM_MANAGER')) {
+            setUserRole('MANAGER');
+        } else if (userRoles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')) {
+            setUserRole('OPERATOR');
         } else {
-            navigate('/not-authorized');
-            return;
+            setUserRole('OTHER_ROLE');
         }
+
+        const fetchEquipmentDetail = async () => {
+            try {
+                const response = await fetch(`/api/equipment/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setEquipmentData(data);
+                } else {
+                    console.error('Failed to fetch equipment details');
+                }
+            } catch (error) {
+                console.error('Error fetching equipment details:', error);
+            }
+        };
 
         fetchEquipmentDetail();
-    }, []);
+    }, [isAuthenticated, userRoles, navigate, id]);
 
-    const fetchEquipmentDetail = async () => {
-        try {
-            const response = await fetch(`/api/equipment/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include',
-            });
 
-            if (response.ok) {
-                const data = await response.json();
-                setEquipmentData(data);
-            } else {
-                console.error('Failed to fetch equipment details');
-            }
-        } catch (error) {
-            console.error('Error fetching equipment details:', error);
-        }
-    };
 
     if (!equipmentData) {
         return (
             <div>
-                <Navbar onLogout={onLogout} userRole={userRole} username={username} />
+                <Navbar userRole={userRole} username={username} />
                 <div style={{ padding: '20px' }}>
                     <p>Loading equipment details...</p>
                 </div>
@@ -80,7 +80,7 @@ const EquipmentDetail = ({ onLogout }) => {
 
     return (
         <div>
-            <Navbar onLogout={onLogout} userRole={userRole} username={username} />
+            <Navbar userRole={userRole} username={username} />
             <div style={{ padding: '20px' }}>
                 <h2>Szczegóły Sprzętu</h2>
                 <div>
@@ -131,10 +131,6 @@ const EquipmentDetail = ({ onLogout }) => {
             </div>
         </div>
     );
-};
-
-EquipmentDetail.propTypes = {
-    onLogout: PropTypes.func.isRequired,
 };
 
 export default EquipmentDetail;

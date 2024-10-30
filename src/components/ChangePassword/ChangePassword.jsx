@@ -1,39 +1,37 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
-import PropTypes from 'prop-types';
+import { AuthContext } from '../../AuthContext.jsx';
 
-const ChangePassword = ({ onLogout }) => {
+const ChangePassword = () => {
     const [formData, setFormData] = useState({
         currentPassword: '',
         newPassword: '',
         confirmNewPassword: '',
     });
+    const { isAuthenticated, userRoles, username } = useContext(AuthContext);
+
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [userRole, setUserRole] = useState('');
-    const [username, setUsername] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
-        const storedRoles = sessionStorage.getItem('roles');
-        const username = sessionStorage.getItem('username');
-
-        setUsername(username);
-
-        if (!username || !storedRoles) {
+        if (!isAuthenticated) {
             navigate('/sign-in');
             return;
         }
 
-        const roles = JSON.parse(storedRoles);
-
-        if (roles.includes('ROLE_FARM_MANAGER') || roles.includes('ROLE_FARM_OWNER')) {
-            setUserRole('MANAGER_OR_OWNER');
+        if (userRoles.includes('ROLE_FARM_OWNER')) {
+            setUserRole('OWNER');
+        } else if (userRoles.includes('ROLE_FARM_MANAGER')) {
+            setUserRole('MANAGER');
+        } else if (userRoles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')) {
+            setUserRole('OPERATOR');
         } else {
             setUserRole('OTHER_ROLE');
         }
-    }, [navigate]);
+    }, [navigate, isAuthenticated, userRoles]);
 
     const handleInputChange = (e) => {
         setFormData({
@@ -98,7 +96,7 @@ const ChangePassword = ({ onLogout }) => {
 
     return (
         <div>
-            <Navbar onLogout={onLogout} userRole={userRole} username={username} />
+            <Navbar userRole={userRole} username={username} />
             <div style={{ padding: '20px' }}>
                 <h2>Zmień hasło</h2>
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
@@ -136,10 +134,6 @@ const ChangePassword = ({ onLogout }) => {
             </div>
         </div>
     );
-};
-
-ChangePassword.propTypes = {
-    onLogout: PropTypes.func.isRequired,
 };
 
 export default ChangePassword;

@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
+import {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { AuthContext } from '../../AuthContext.jsx';
 
-const Navbar = ({ onLogout, userRole, username }) => {
+
+const Navbar = ({ userRole, username }) => {
     const [showDropdown, setShowDropdown] = useState(false);
+    const { handleLogout } = useContext(AuthContext);
 
     const handleUsernameClick = () => {
         setShowDropdown(!showDropdown);
@@ -48,28 +51,29 @@ const Navbar = ({ onLogout, userRole, username }) => {
                                 zIndex: 1,
                             }}
                         >
-                            <Link to="/farm-details" onClick={() => setShowDropdown(false)}>
-                                <div style={{ padding: '10px' }}>Farm Details</div>
-                            </Link>
+                            {(userRole === 'OWNER' || userRole === 'MANAGER') && (
+                                <Link to="/farm-details" onClick={() => setShowDropdown(false)}>
+                                    <div style={{ padding: '10px' }}>Farm Details</div>
+                                </Link>
+                            )}
                             <Link to="/change-password" onClick={() => setShowDropdown(false)}>
                                 <div style={{ padding: '10px' }}>Change Password</div>
                             </Link>
-                            <Link to="/new-activation-code" onClick={() => setShowDropdown(false)}>
-                                <div style={{ padding: '10px' }}>New Activation Code</div>
-                            </Link>
+                            {userRole === 'OWNER' && (
+                                <Link to="/new-activation-code" onClick={() => setShowDropdown(false)}>
+                                    <div style={{ padding: '10px' }}>New Activation Code</div>
+                                </Link>
+                            )}
                         </div>
                     )}
                 </div>
-                <button onClick={onLogout}>Wyloguj</button>
+                <button onClick={handleLogout}>Wyloguj</button>
             </div>
         </nav>
     );
 };
-
 Navbar.propTypes = {
-    onLogout: PropTypes.func.isRequired,
     userRole: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
 };
-
 export default Navbar;
