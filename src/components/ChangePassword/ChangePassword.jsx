@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
-import { AuthContext } from '../../AuthContext.jsx';
+import { useAuth } from '../../AuthContext.jsx';
 
 const ChangePassword = () => {
     const [formData, setFormData] = useState({
@@ -9,29 +9,23 @@ const ChangePassword = () => {
         newPassword: '',
         confirmNewPassword: '',
     });
-    const { isAuthenticated, userRoles, username } = useContext(AuthContext);
 
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [userRole, setUserRole] = useState('');
+    const { user, handleLogout } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isAuthenticated) {
-            navigate('/sign-in');
-            return;
-        }
-
-        if (userRoles.includes('ROLE_FARM_OWNER')) {
-            setUserRole('OWNER');
-        } else if (userRoles.includes('ROLE_FARM_MANAGER')) {
-            setUserRole('MANAGER');
-        } else if (userRoles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')) {
-            setUserRole('OPERATOR');
-        } else {
-            setUserRole('OTHER_ROLE');
-        }
-    }, [navigate, isAuthenticated, userRoles]);
+        const userRole = user.roles.includes('ROLE_FARM_OWNER')
+            ? 'OWNER'
+            : user.roles.includes('ROLE_FARM_MANAGER')
+                ? 'MANAGER'
+                : user.roles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')
+                    ? 'OPERATOR'
+                    : 'OTHER_ROLE';
+        setUserRole(userRole);
+    }, [navigate, user]);
 
     const handleInputChange = (e) => {
         setFormData({
@@ -96,7 +90,7 @@ const ChangePassword = () => {
 
     return (
         <div>
-            <Navbar userRole={userRole} username={username} />
+            <Navbar onLogout={handleLogout} userRole={userRole} username={user.username} />
             <div style={{ padding: '20px' }}>
                 <h2>Zmień hasło</h2>
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}

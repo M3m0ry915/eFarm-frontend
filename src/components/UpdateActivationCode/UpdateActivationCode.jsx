@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import { useAuth } from '../../AuthContext.jsx';
 
 const UpdateActivationCode = () => {
     const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ const UpdateActivationCode = () => {
     });
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const { handleExpireCodeInfoUpdate } = useAuth();
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -53,6 +55,7 @@ const UpdateActivationCode = () => {
 
             if (response.ok) {
                 setSuccessMessage('Kod aktywacyjny został zaktualizowany pomyślnie.');
+                handleExpireCodeInfoUpdate(null);
                 setTimeout(() => {
                     navigate('/sign-in');
                 }, 2000);

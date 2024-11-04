@@ -1,14 +1,14 @@
-import {useContext, useState} from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../AuthContext.jsx';
+import { useAuth } from '../../AuthContext.jsx';
 
 const SignIn = () => {
-    const { handleLogin } = useContext(AuthContext);
     const [formData, setFormData] = useState({
         username: '',
         password: ''
     });
     const [errorMessage, setErrorMessage] = useState('');
+    const { handleLogin } = useAuth();
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -44,7 +44,8 @@ const SignIn = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(formData),
+                credentials: 'include',
             });
 
             const data = await response.json();

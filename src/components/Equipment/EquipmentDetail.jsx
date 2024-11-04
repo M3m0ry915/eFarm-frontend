@@ -1,32 +1,29 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
-import { AuthContext } from '../../AuthContext.jsx';
+import { useAuth } from '../../AuthContext.jsx';
+import EquipmentForm from './EquipmentForm.jsx';
 
 const EquipmentDetail = () => {
     const { id } = useParams();
     const [equipmentData, setEquipmentData] = useState(null);
     const [userRole, setUserRole] = useState('');
-    const { userRoles, username, isAuthenticated } = useContext(AuthContext);
+    const { user, handleLogout } = useAuth();
     const navigate = useNavigate();
+    const [showEditForm, setShowEditForm] = useState(false);
+
 
 
     useEffect(() => {
-        if (!isAuthenticated) {
-            navigate('/sign-in');
-            return;
-        }
+        const userRole = user.roles.includes('ROLE_FARM_OWNER')
+            ? 'OWNER'
+            : user.roles.includes('ROLE_FARM_MANAGER')
+                ? 'MANAGER'
+                : user.roles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')
+                    ? 'OPERATOR'
+                    : 'OTHER_ROLE';
+        setUserRole(userRole);
 
-        // Set userRole based on userRoles
-        if (userRoles.includes('ROLE_FARM_OWNER')) {
-            setUserRole('OWNER');
-        } else if (userRoles.includes('ROLE_FARM_MANAGER')) {
-            setUserRole('MANAGER');
-        } else if (userRoles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')) {
-            setUserRole('OPERATOR');
-        } else {
-            setUserRole('OTHER_ROLE');
-        }
 
         const fetchEquipmentDetail = async () => {
             try {
@@ -50,14 +47,67 @@ const EquipmentDetail = () => {
         };
 
         fetchEquipmentDetail();
-    }, [isAuthenticated, userRoles, navigate, id]);
+    }, [navigate, user, id]);
 
+    const handleDelete = async () => {
+        if (window.confirm('Czy na pewno chcesz usunąć ten sprzęt?')) {
+            try {
+                const response = await fetch(`/api/equipment/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                });
 
+                if (response.ok) {
+                    alert('Sprzęt został usunięty.');
+                    navigate('/equipment');
+                } else {
+                    const errorData = await response.json();
+                    console.error('Failed to delete equipment:', errorData.message);
+                    alert(`Error: ${errorData.message}`);
+                }
+            } catch (error) {
+                console.error('Error deleting equipment:', error);
+                alert(`Error: ${error.message}`);
+            }
+        }
+    };
+
+    const handleEdit = () => {
+        setShowEditForm(true);
+    };
+
+    const handleFormClose = () => {
+        setShowEditForm(false);
+        const fetchEquipmentDetail = async () => {
+            try {
+                const response = await fetch(`/api/equipment/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setEquipmentData(data);
+                } else {
+                    console.error('Failed to fetch equipment details');
+                }
+            } catch (error) {
+                console.error('Error fetching equipment details:', error);
+            }
+        };
+        fetchEquipmentDetail();
+    };
 
     if (!equipmentData) {
         return (
             <div>
-                <Navbar userRole={userRole} username={username} />
+                <Navbar onLogout={handleLogout} userRole={userRole} username={user.username} />
                 <div style={{ padding: '20px' }}>
                     <p>Loading equipment details...</p>
                 </div>
@@ -80,7 +130,7 @@ const EquipmentDetail = () => {
 
     return (
         <div>
-            <Navbar userRole={userRole} username={username} />
+            <Navbar onLogout={handleLogout} userRole={userRole} username={user.username} />
             <div style={{ padding: '20px' }}>
                 <h2>Szczegóły Sprzętu</h2>
                 <div>
@@ -128,7 +178,20 @@ const EquipmentDetail = () => {
                     )}
                 </div>
                 <button onClick={() => navigate('/equipment')}>Powrót do listy sprzętu</button>
+                {(userRole === 'OWNER' || userRole === 'MANAGER') && (
+                    <>
+                        <button onClick={handleEdit} style={{ marginLeft: '10px' }}>
+                            Edytuj
+                        </button>
+                        <button onClick={handleDelete} style={{ marginLeft: '10px' }}>
+                            Usuń
+                        </button>
+                    </>
+                )}
             </div>
+            {showEditForm && (
+                <EquipmentForm onClose={handleFormClose} equipmentData={equipmentData} />
+            )}
         </div>
     );
 };

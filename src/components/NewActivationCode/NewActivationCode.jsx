@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
-import { AuthContext } from '../../AuthContext.jsx';
+import { useAuth } from '../../AuthContext.jsx';
 
 const NewActivationCode = () => {
     const [formData, setFormData] = useState({
@@ -11,28 +11,17 @@ const NewActivationCode = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [userRole, setUserRole] = useState('');
-    const {
-        isAuthenticated,
-        userRoles,
-        username,
-        handleLogout,
-        handleExpireCodeInfoUpdate,
-    } = useContext(AuthContext);
+    const { user, handleLogout, handleExpireCodeInfoUpdate } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isAuthenticated) {
-            navigate('/sign-in');
-            return;
-        }
-
-        if (!userRoles.includes('ROLE_FARM_OWNER')) {
+        if (!user.roles.includes('ROLE_FARM_OWNER')) {
             navigate('/not-authorized');
             return;
         }
 
         setUserRole('OWNER');
-    }, [navigate, isAuthenticated, userRoles]);
+    }, [user, navigate]);
 
     const handleInputChange = (e) => {
         setFormData({
@@ -93,7 +82,7 @@ const NewActivationCode = () => {
 
     return (
         <div>
-            <Navbar onLogout={handleLogout} userRole={userRole} username={username} />
+            <Navbar onLogout={handleLogout} userRole={userRole} username={user.username} />
             <div style={{ padding: '20px' }}>
                 <h2>New Activation Code</h2>
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}

@@ -1,29 +1,30 @@
-import {useEffect, useContext, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import Navbar from '../Navbar/Navbar';
-import { AuthContext } from '../../AuthContext.jsx';
+import { useAuth } from '../../AuthContext.jsx';
 
 const Dashboard = () => {
-    const { isAuthenticated, userRoles, expireCodeInfo, handleLogout, username, } = useContext(AuthContext);
+    const { user, expireCodeInfo, handleLogout } = useAuth();
     const [showExpireCodeInfo, setShowExpireCodeInfo] = useState(!!expireCodeInfo);
+    const [userRole, setUserRole] = useState('');
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        const username = sessionStorage.getItem('username');
+        //const username = sessionStorage.getItem('username');
+        // if (!user.username || !user.roles) {
+        //     navigate('/sign-in');
+        // }
 
-        if (!username || !isAuthenticated) {
-            navigate('/sign-in');
-        }
-    }, [navigate, isAuthenticated, userRoles]);
-
-    const userRole = userRoles.includes('ROLE_FARM_OWNER')
+        const userRole = user.roles.includes('ROLE_FARM_OWNER')
         ? 'OWNER'
-        : userRoles.includes('ROLE_FARM_MANAGER')
+        : user.roles.includes('ROLE_FARM_MANAGER')
             ? 'MANAGER'
-            : userRoles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')
+            : user.roles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')
                 ? 'OPERATOR'
                 : 'OTHER_ROLE';
+        setUserRole(userRole);
+    }, [navigate, user]);
 
     const handleOk = () => {
         setShowExpireCodeInfo(false);
@@ -34,9 +35,9 @@ const Dashboard = () => {
     };
     return (
         <div>
-            <Navbar userRole={userRole} username={username} onLogout={handleLogout} />
+            <Navbar userRole={userRole} username={user.username} onLogout={handleLogout} />
             <div style={{ padding: '20px' }}>
-                <h2>Witaj w panelu zarządzania, {username}!</h2>
+                <h2>Witaj w panelu zarządzania, {user.username}!</h2>
                 {showExpireCodeInfo && expireCodeInfo &&(
                     <div className="notification" style={{ border: '1px solid orange', padding: '10px', marginTop: '20px' }}>
                         <p>{expireCodeInfo}</p>
