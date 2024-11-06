@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import { useAuth } from '../../AuthContext.jsx';
-import EquipmentForm from './EquipmentForm.jsx';
+import EquipmentForm from './EquipmentForm';
 
 const EquipmentList = () => {
     const [equipmentList, setEquipmentList] = useState([]);

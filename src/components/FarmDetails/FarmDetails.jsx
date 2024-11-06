@@ -242,9 +242,9 @@ const FarmDetails = () => {
                             <p>
                                 <strong>City:</strong> {farmData.city}
                             </p>
-                            {userRole === 'OWNER' && farmData.expireCodeDate && (
+                            {userRole === 'OWNER' && farmData.expireCodeInfo && (
                                 <p>
-                                    <strong>Activation Code Expires On:</strong> {farmData.expireCodeDate}
+                                    <strong>Activation Code Expires On:</strong> {farmData.expireCodeInfo}
                                 </p>
                             )}
                             {(userRole === 'OWNER' || userRole === 'MANAGER') && (

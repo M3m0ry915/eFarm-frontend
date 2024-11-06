@@ -85,7 +85,7 @@ const SignupUser = () => {
             return;
         }
 
-        if (!user.roles.includes(['ROLE_FARM_OWNER']) || !user.roles.includes(['ROLE_FARM_MANAGER'])) {
+        if (!user.roles.includes(['ROLE_FARM_OWNER']) &&  !user.roles.includes(['ROLE_FARM_MANAGER'])) {
             setErrorMessage('You do not have permission to register a new user.');
             return;
         }

@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
                     username: username,
                     roles: JSON.parse(roles)
                 });
-                if (storedExpireCodeInfo) {
+                if (storedExpireCodeInfo && storedExpireCodeInfo !== 'null') {
                     setExpireCodeInfo(storedExpireCodeInfo);
                 } else {
                     setExpireCodeInfo(null);

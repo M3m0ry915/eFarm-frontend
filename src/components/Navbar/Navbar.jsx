@@ -1,14 +1,21 @@
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../../AuthContext.jsx';
 
 const Navbar = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const { user, handleLogout } = useAuth();
+    const navigate = useNavigate();
 
     const handleUsernameClick = () => {
         setShowDropdown(!showDropdown);
     };
+
+    const handleLogoutClick = () => {
+        handleLogout();
+        navigate('/sign-in');
+    };
+
     const userRole = user.roles.includes('ROLE_FARM_OWNER')
         ? 'OWNER'
         : user.roles.includes('ROLE_FARM_MANAGER')
@@ -36,14 +43,14 @@ const Navbar = () => {
                     <button>Ewidencja</button>
                 </Link>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', position: 'relative' }}>
+            <div style={{display: 'flex', alignItems: 'center', gap: '10px', position: 'relative'}}>
                 {(userRole === 'OWNER' || userRole === 'MANAGER') && (
                     <Link to="/signup-user">
                         <button>Zarejestruj Użytkownika</button>
                     </Link>
                 )}
-                <div style={{ position: 'relative' }}>
-          <span onClick={handleUsernameClick} style={{ cursor: 'pointer' }}>
+                <div style={{position: 'relative'}}>
+          <span onClick={handleUsernameClick} style={{cursor: 'pointer'}}>
             {user.username}
           </span>
                     {showDropdown && (
@@ -59,21 +66,21 @@ const Navbar = () => {
                         >
                             {(userRole === 'OWNER' || userRole === 'MANAGER') && (
                                 <Link to="/farm-details" onClick={() => setShowDropdown(false)}>
-                                    <div style={{ padding: '10px' }}>Farm Details</div>
+                                    <div style={{padding: '10px'}}>Farm Details</div>
                                 </Link>
                             )}
                             <Link to="/change-password" onClick={() => setShowDropdown(false)}>
-                                <div style={{ padding: '10px' }}>Change Password</div>
+                                <div style={{padding: '10px'}}>Change Password</div>
                             </Link>
                             {userRole === 'OWNER' && (
                                 <Link to="/new-activation-code" onClick={() => setShowDropdown(false)}>
-                                    <div style={{ padding: '10px' }}>New Activation Code</div>
+                                    <div style={{padding: '10px'}}>New Activation Code</div>
                                 </Link>
                             )}
                         </div>
                     )}
                 </div>
-                <button onClick={handleLogout}>Wyloguj</button>
+                <button onClick={handleLogoutClick}>Wyloguj</button>
             </div>
         </nav>
     );

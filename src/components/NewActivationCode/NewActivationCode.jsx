@@ -11,7 +11,11 @@ const NewActivationCode = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [userRole, setUserRole] = useState('');
-    const { user, handleLogout, handleExpireCodeInfoUpdate } = useAuth();
+    const {
+        user,
+        handleLogout,
+        handleExpireCodeInfoUpdate,
+    } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {

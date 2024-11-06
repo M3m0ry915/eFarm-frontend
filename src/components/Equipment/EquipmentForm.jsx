@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const EquipmentForm = ({ onClose, equipmentData = null }) => {
     const [categories, setCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState(equipmentData ? equipmentData.category : '');
+    const [selectedCategory, setSelectedCategory] = useState('');
     const [fields, setFields] = useState([]);
     const [formData, setFormData] = useState(equipmentData || {});
 
@@ -33,8 +33,24 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
     }, []);
 
     useEffect(() => {
-        if (selectedCategory) {
-            const category = categories.find((cat) => cat.name === selectedCategory);
+        if (categories.length > 0) {
+            if (equipmentData) {
+                setSelectedCategory(equipmentData.category);
+                setFormData(equipmentData);
+                const category = categories.find((cat) => cat.categoryName === equipmentData.category);
+                if (category) {
+                    setFields(category.fields);
+                }
+            } else {
+                setSelectedCategory('');
+                setFormData({});
+            }
+        }
+    }, [categories, equipmentData]);
+
+    useEffect(() => {
+        if (selectedCategory && categories.length > 0) {
+            const category = categories.find((cat) => cat.categoryName === selectedCategory);
             if (category) {
                 setFields(category.fields);
             }
@@ -92,8 +108,8 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
                             <select value={selectedCategory} onChange={handleCategoryChange} required>
                                 <option value="">Wybierz kategorię</option>
                                 {categories.map((category) => (
-                                    <option key={category.name} value={category.name}>
-                                        {category.name}
+                                    <option key={category.categoryName} value={category.categoryName}>
+                                        {category.categoryName}
                                     </option>
                                 ))}
                             </select>
@@ -101,16 +117,6 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
                     )}
                     {selectedCategory && (
                         <>
-                            <div>
-                                <label>Nazwa Sprzętu:</label>
-                                <input
-                                    type="text"
-                                    name="equipmentName"
-                                    value={formData.equipmentName || ''}
-                                    onChange={handleInputChange}
-                                    required
-                                />
-                            </div>
                             {fields.map((field) => (
                                 <div key={field.name}>
                                     <label>{field.label}:</label>
@@ -123,9 +129,9 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
                                     />
                                 </div>
                             ))}
-                            <div style={{ marginTop: '20px' }}>
+                            <div style={{marginTop: '20px'}}>
                                 <button type="submit">{equipmentData ? 'Zapisz Zmiany' : 'Dodaj Sprzęt'}</button>
-                                <button type="button" onClick={onClose} style={{ marginLeft: '10px' }}>
+                                <button type="button" onClick={onClose} style={{marginLeft: '10px' }}>
                                     Anuluj
                                 </button>
                             </div>
@@ -160,8 +166,8 @@ EquipmentForm.propTypes = {
     onClose: PropTypes.func.isRequired,
     equipmentData: PropTypes.shape({
         equipmentId: PropTypes.number,
-        equipmentName: PropTypes.string,
         category: PropTypes.string,
     }),
 };
+
 export default EquipmentForm;

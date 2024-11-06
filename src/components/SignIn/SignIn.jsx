@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext.jsx';
 
 const SignIn = () => {
+    const { handleLogin } = useAuth();
     const [formData, setFormData] = useState({
         username: '',
         password: ''
     });
     const [errorMessage, setErrorMessage] = useState('');
-    const { handleLogin } = useAuth();
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {

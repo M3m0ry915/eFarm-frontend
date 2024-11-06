@@ -1,4 +1,3 @@
-// components/NotAuthorized/NotAuthorized.jsx
 import { Link } from 'react-router-dom';
 
 const NotAuthorized = () => {

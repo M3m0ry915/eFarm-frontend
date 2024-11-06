@@ -4,7 +4,7 @@ import Navbar from '../Navbar/Navbar';
 import { useAuth } from '../../AuthContext.jsx';
 
 const Dashboard = () => {
-    const { user, expireCodeInfo, handleLogout } = useAuth();
+    const { user, expireCodeInfo, handleLogout, handleExpireCodeInfoUpdate } = useAuth();
     const [showExpireCodeInfo, setShowExpireCodeInfo] = useState(!!expireCodeInfo);
     const [userRole, setUserRole] = useState('');
 
@@ -28,6 +28,7 @@ const Dashboard = () => {
 
     const handleOk = () => {
         setShowExpireCodeInfo(false);
+        handleExpireCodeInfoUpdate(null);
     };
 
     const handleUpdate = () => {
