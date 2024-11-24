@@ -7,9 +7,34 @@ const EquipmentDetail = () => {
     const { id } = useParams();
     const [equipmentData, setEquipmentData] = useState(null);
     const [userRole, setUserRole] = useState('');
-    const { userRoles, username, isAuthenticated } = useAuth();
+    const { user, username, isAuthenticated } = useAuth();
     const navigate = useNavigate();
 
+    const mockEquipmentData = [
+        {
+            equipmentId: 1,
+            equipmentName: 'Traktor John Deere',
+            category: 'Traktory',
+            brand: 'John Deere',
+            model: 'JD 5075E',
+            power: 75,
+            insurancePolicyNumber: 'PL123456',
+            insuranceExpirationDate: '2025-12-31',
+            inspectionExpireDate: '2024-12-31',
+        },
+        {
+            equipmentId: 2,
+            equipmentName: 'Kombajn New Holland',
+            category: 'Kombajny',
+            brand: 'New Holland',
+            model: 'CX7.90',
+            capacity: 9.0,
+            insurancePolicyNumber: 'PL654321',
+            insuranceExpirationDate: '2025-06-30',
+            inspectionExpireDate: '2024-06-30',
+        },
+        // Dodaj pozostałe mockowane dane
+    ];
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -17,17 +42,17 @@ const EquipmentDetail = () => {
             return;
         }
 
-        // Set userRole based on userRoles
-        if (userRoles.includes('ROLE_FARM_OWNER')) {
-            setUserRole('OWNER');
-        } else if (userRoles.includes('ROLE_FARM_MANAGER')) {
-            setUserRole('MANAGER');
-        } else if (userRoles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')) {
-            setUserRole('OPERATOR');
-        } else {
-            setUserRole('OTHER_ROLE');
-        }
+        const role = user.roles.includes('ROLE_FARM_OWNER')
+            ? 'OWNER'
+            : user.roles.includes('ROLE_FARM_MANAGER')
+                ? 'MANAGER'
+                : user.roles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')
+                    ? 'OPERATOR'
+                    : 'OTHER_ROLE';
+        setUserRole(role);
 
+        // Oryginalny kod pobierający szczegóły sprzętu z backendu
+        /*
         const fetchEquipmentDetail = async () => {
             try {
                 const response = await fetch(`/api/equipment/${id}`, {
@@ -50,16 +75,27 @@ const EquipmentDetail = () => {
         };
 
         fetchEquipmentDetail();
-    }, [isAuthenticated, userRoles, navigate, id]);
+        */
 
+        // Użycie mockowanych danych
+        const fetchMockEquipmentDetail = () => {
+            const equipment = mockEquipmentData.find((eq) => eq.equipmentId === parseInt(id));
+            if (equipment) {
+                setEquipmentData(equipment);
+            } else {
+                console.error('Equipment not found');
+            }
+        };
 
+        fetchMockEquipmentDetail();
+    }, [isAuthenticated, navigate, id, user]);
 
     if (!equipmentData) {
         return (
             <div>
                 <Navbar userRole={userRole} username={username} />
                 <div style={{ padding: '20px' }}>
-                    <p>Loading equipment details...</p>
+                    <p>Ładowanie szczegółów sprzętu...</p>
                 </div>
             </div>
         );
@@ -96,32 +132,32 @@ const EquipmentDetail = () => {
                     <p>
                         <strong>Model:</strong> {model}
                     </p>
-                    {power !== null && (
+                    {power !== undefined && (
                         <p>
                             <strong>Moc:</strong> {power}
                         </p>
                     )}
-                    {capacity !== null && (
+                    {capacity !== undefined && (
                         <p>
                             <strong>Pojemność:</strong> {capacity}
                         </p>
                     )}
-                    {workingWidth !== null && (
+                    {workingWidth !== undefined && (
                         <p>
                             <strong>Szerokość Robocza:</strong> {workingWidth}
                         </p>
                     )}
-                    {insurancePolicyNumber !== null && (
+                    {insurancePolicyNumber && (
                         <p>
                             <strong>Numer Polisy Ubezpieczeniowej:</strong> {insurancePolicyNumber}
                         </p>
                     )}
-                    {insuranceExpirationDate !== null && (
+                    {insuranceExpirationDate && (
                         <p>
                             <strong>Data Wygaśnięcia Ubezpieczenia:</strong> {insuranceExpirationDate}
                         </p>
                     )}
-                    {inspectionExpireDate !== null && (
+                    {inspectionExpireDate && (
                         <p>
                             <strong>Data Wygaśnięcia Przeglądu:</strong> {inspectionExpireDate}
                         </p>
