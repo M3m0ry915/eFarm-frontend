@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 
 const EquipmentForm = ({ onClose, equipmentData = null }) => {
     const [categories, setCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(equipmentData ? equipmentData.category : '');
     const [fields, setFields] = useState([]);
     const [formData, setFormData] = useState(equipmentData || {});
 
     useEffect(() => {
+        // Oryginalny kod pobierający kategorie z backendu
+        /*
         const fetchCategories = async () => {
             try {
                 const response = await fetch('/api/equipment/categories', {
@@ -30,6 +32,53 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
         };
 
         fetchCategories();
+        */
+
+        // Mockowane dane kategorii
+        const mockCategories = [
+            {
+                categoryName: 'Traktory',
+                fields: [
+                    'equipmentName',
+                    'category',
+                    'brand',
+                    'model',
+                    'power',
+                    'insurancePolicyNumber',
+                    'insuranceExpirationDate',
+                    'inspectionExpireDate',
+                ],
+            },
+            {
+                categoryName: 'Kombajny',
+                fields: [
+                    'equipmentName',
+                    'category',
+                    'brand',
+                    'model',
+                    'capacity',
+                    'insurancePolicyNumber',
+                    'insuranceExpirationDate',
+                    'inspectionExpireDate',
+                ],
+            },
+            {
+                categoryName: 'Pługi',
+                fields: [
+                    'equipmentName',
+                    'category',
+                    'brand',
+                    'model',
+                    'workingWidth',
+                    'insurancePolicyNumber',
+                    'insuranceExpirationDate',
+                    'inspectionExpireDate',
+                ],
+            },
+            // Dodaj więcej kategorii według potrzeb
+        ];
+
+        setCategories(mockCategories);
     }, []);
 
     useEffect(() => {
@@ -59,7 +108,7 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
 
     const handleCategoryChange = (e) => {
         setSelectedCategory(e.target.value);
-        setFormData({});
+        setFormData({ category: e.target.value }); // Resetuj dane formularza przy zmianie kategorii
     };
 
     const handleInputChange = (e) => {
@@ -69,12 +118,12 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const method = equipmentData ? 'PUT' : 'POST';
-        const url = equipmentData
-            ? `/api/equipment/${equipmentData.equipmentId}`
-            : '/api/equipment/new';
+        //const method = equipmentData ? 'PUT' : 'POST';
+        //const url = equipmentData ? `/api/equipment/${equipmentData.equipmentId}`: '/api/equipment/new';
 
         try {
+            // Oryginalny kod wysyłający dane do backendu
+            /*
             const response = await fetch(url, {
                 method: method,
                 headers: {
@@ -91,6 +140,11 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
                 console.error('Failed to submit equipment:', errorData.message);
                 alert(`Error: ${errorData.message}`);
             }
+            */
+
+            // Mockowanie akcji dodawania/edycji sprzętu
+            console.log('Submitting data:', { ...formData, category: selectedCategory });
+            onClose();
         } catch (error) {
             console.error('Error submitting equipment:', error);
             alert(`Error: ${error.message}`);
@@ -113,25 +167,32 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
                                     </option>
                                 ))}
                             </select>
+                            <div style={{marginTop: '20px'}}>
+                                <button type="button" onClick={onClose}>
+                                    Anuluj
+                                </button>
+                            </div>
                         </div>
                     )}
                     {selectedCategory && (
                         <>
                             {fields.map((field) => (
-                                <div key={field.name}>
-                                    <label>{field.label}:</label>
+                                <div key={field}>
+                                <label>{field}:</label>
                                     <input
-                                        type={field.type}
-                                        name={field.name}
-                                        value={formData[field.name] || ''}
+                                        type="text"
+                                        name={field}
+                                        value={formData[field] || ''}
                                         onChange={handleInputChange}
-                                        required={field.required}
+                                        required={field === 'equipmentName' || field === 'brand' || field === 'model'}
                                     />
                                 </div>
                             ))}
-                            <div style={{marginTop: '20px'}}>
-                                <button type="submit">{equipmentData ? 'Zapisz Zmiany' : 'Dodaj Sprzęt'}</button>
-                                <button type="button" onClick={onClose} style={{marginLeft: '10px' }}>
+                            <div style={{ marginTop: '20px' }}>
+                                <button type="submit">
+                                    {equipmentData ? 'Zapisz Zmiany' : 'Dodaj Sprzęt'}
+                                </button>
+                                <button type="button" onClick={onClose} style={{ marginLeft: '10px' }}>
                                     Anuluj
                                 </button>
                             </div>
@@ -162,6 +223,7 @@ const modalContentStyle = {
     maxHeight: '80%',
     overflowY: 'auto',
 };
+
 EquipmentForm.propTypes = {
     onClose: PropTypes.func.isRequired,
     equipmentData: PropTypes.shape({
