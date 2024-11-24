@@ -1,9 +1,12 @@
-import {Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../../AuthContext.jsx';
+import './Navbar.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Navbar = () => {
     const [showDropdown, setShowDropdown] = useState(false);
+    const [activeButton, setActiveButton] = useState(null);  // Dodajemy stan do śledzenia aktywnego przycisku
     const { user, handleLogout } = useAuth();
     const navigate = useNavigate();
 
@@ -24,65 +27,94 @@ const Navbar = () => {
                 ? 'OPERATOR'
                 : 'OTHER_ROLE';
 
+    // Funkcja do ustawiania aktywnego przycisku
+    const handleButtonClick = (buttonName) => {
+        setActiveButton(buttonName);  // Ustawia przycisk jako aktywny
+    };
+
     return (
-        <nav style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', backgroundColor: '#f8f8f8' }}>
-            <div style={{ display: 'flex', gap: '10px' }}>
+        <nav className="navbar">
+            <div className="navbar-links">
                 <Link to="/dashboard">
-                    <button>Gospodarstwo</button>
+                    <button
+                        className={`navbar-button ${activeButton === 'dashboard' ? 'active' : ''}`}
+                        onClick={() => handleButtonClick('dashboard')}
+                    >
+                        <i className="fas fa-dashboard"></i> Gospodarstwo
+                    </button>
                 </Link>
                 <Link to="#">
-                    <button>Zabiegi</button>
+                    <button
+                        className={`navbar-button ${activeButton === 'zabiegi' ? 'active' : ''}`}
+                        onClick={() => handleButtonClick('zabiegi')}
+                    >
+                        <i className="fas fa-seedling"></i> Zabiegi
+                    </button>
                 </Link>
                 <Link to="/equipment">
-                    <button>Sprzęt</button>
+                    <button
+                        className={`navbar-button ${activeButton === 'sprzet' ? 'active' : ''}`}
+                        onClick={() => handleButtonClick('sprzet')}
+                    >
+                        <i className="fas fa-tractor"></i> Sprzęt
+                    </button>
                 </Link>
                 <Link to="#">
-                    <button>Finanse</button>
+                    <button
+                        className={`navbar-button ${activeButton === 'finanse' ? 'active' : ''}`}
+                        onClick={() => handleButtonClick('finanse')}
+                    >
+                        <i className="fas fa-coins"></i> Finanse
+                    </button>
                 </Link>
                 <Link to="#">
-                    <button>Ewidencja</button>
+                    <button
+                        className={`navbar-button ${activeButton === 'ewidencja' ? 'active' : ''}`}
+                        onClick={() => handleButtonClick('ewidencja')}
+                    >
+                        <i className="fas fa-file-alt"></i> Ewidencja
+                    </button>
                 </Link>
             </div>
-            <div style={{display: 'flex', alignItems: 'center', gap: '10px', position: 'relative'}}>
+            <div className="navbar-user-section">
                 {(userRole === 'OWNER' || userRole === 'MANAGER') && (
                     <Link to="/signup-user">
-                        <button>Zarejestruj Użytkownika</button>
+                        <button className="navbar-button">
+                            <i className="fas fa-user-plus"></i> Zarejestruj Użytkownika
+                        </button>
                     </Link>
                 )}
-                <div style={{position: 'relative'}}>
-          <span onClick={handleUsernameClick} style={{cursor: 'pointer'}}>
-            {user.username}
-          </span>
+                <div className="navbar-username-container">
+                    <span
+                        onClick={handleUsernameClick}
+                        className={`navbar-username ${showDropdown ? 'active' : ''}`}
+                    >
+                        {user.username}
+                    </span>
                     {showDropdown && (
-                        <div
-                            style={{
-                                position: 'absolute',
-                                right: 0,
-                                top: '100%',
-                                backgroundColor: 'white',
-                                border: '1px solid #ccc',
-                                zIndex: 1,
-                            }}
-                        >
+                        <div className="username-dropdown">
                             {(userRole === 'OWNER' || userRole === 'MANAGER') && (
                                 <Link to="/farm-details" onClick={() => setShowDropdown(false)}>
-                                    <div style={{padding: '10px'}}>Farm Details</div>
+                                    <div>Farm Details</div>
                                 </Link>
                             )}
                             <Link to="/change-password" onClick={() => setShowDropdown(false)}>
-                                <div style={{padding: '10px'}}>Change Password</div>
+                                <div>Change Password</div>
                             </Link>
                             {userRole === 'OWNER' && (
                                 <Link to="/new-activation-code" onClick={() => setShowDropdown(false)}>
-                                    <div style={{padding: '10px'}}>New Activation Code</div>
+                                    <div>New Activation Code</div>
                                 </Link>
                             )}
+                            <div onClick={handleLogoutClick} style={{cursor: 'pointer'}}>
+                                Wyloguj
+                            </div>
                         </div>
                     )}
                 </div>
-                <button onClick={handleLogoutClick}>Wyloguj</button>
             </div>
         </nav>
     );
 };
+
 export default Navbar;

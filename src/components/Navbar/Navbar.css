@@ -1,0 +1,175 @@
+/* Resetowanie podstawowych stylów */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #013220 !important; /* Ciemnozielony */
+    width: 100%; /* Szerokość na całe okno */
+    position: fixed; /* Przyklejenie do góry ekranu */
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    color: white; /* Kolor tekstu */
+}
+
+/* Kontener przycisków */
+nav div:first-child {
+    display: flex;
+    gap: 20px;
+}
+
+/* Przyciski w navbarze */
+nav button {
+    background: none !important;
+    border: none !important;
+    color: white !important; /* Biały tekst */
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    cursor: pointer;
+    position: relative;
+    text-transform: uppercase;
+    transition: color 0.3s, background-color 0.3s; /* Animacje */
+    display: flex;
+    align-items: center; /* Wyrównanie ikonek po lewej */
+}
+
+/* Ikony po lewej stronie przycisków */
+nav button i {
+    margin-right: 8px; /* Odstęp między ikoną a tekstem */
+}
+
+/* Efekt podświetlenia (podkreślenie) */
+nav button:hover::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: #a8ffb3; /* Jasnozielona kreska */
+    width: 100%;
+    transition: width 0.3s;
+}
+
+/* Pasek na hover */
+nav button::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    background: transparent;
+    width: 0;
+    transition: width 0.3s;
+}
+
+/* Przyciski po najechaniu */
+nav button:hover {
+    color: #a8ffb3 !important; /* Jasnozielony tekst */
+}
+
+/* Styl użytkownika i wylogowania */
+nav span, nav div:last-child button {
+    color: white !important;
+}
+
+/* Zarejestruj użytkownika po lewej stronie */
+.navbar-user-section {
+    display: flex;
+    align-items: center;
+}
+
+/* Styl dla aktywnego przycisku */
+.navbar-button.active {
+    color: #a8ffb3 !important; /* Zmieniamy kolor tekstu na jasnozielony */
+    border-bottom: 2px solid #a8ffb3; /* Dodajemy podkreślenie */
+    }
+
+
+.navbar-user-section .user-register {
+    margin-right: 10px; /* Daje odstęp pomiędzy przyciskiem a nazwą użytkownika */
+}
+
+/* Dropdown dla nazwy użytkownika */
+.username-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #013220; /* Ciemnozielone tło */
+    border: 1px solid #a8ffb3; /* Jasnozielona ramka */
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Elementy dropdown */
+.username-dropdown div {
+    padding: 10px 15px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: left;
+}
+
+/* Efekt hover dla elementów dropdown */
+.username-dropdown div:hover {
+    background-color: #a8ffb3; /* Jasnozielone podświetlenie */
+    color: #013220; /* Tekst ciemnozielony */
+}
+
+/* Styl aktywnej nazwy użytkownika */
+nav span {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    text-transform: capitalize;
+    padding: 10px;
+    transition: color 0.3s;
+}
+
+/* Podświetlenie na hover dla nazwy użytkownika */
+nav span:hover {
+    color: #a8ffb3; /* Jasnozielony tekst */
+}
+
+/* Strzałka przy nazwie użytkownika */
+.navbar-user-section span::after {
+    content: ' ▼'; /* Symbol strzałki */
+    font-size: 12px;
+    color: #a8ffb3;
+    margin-left: 5px;
+    transition: transform 0.3s;
+}
+
+/* Strzałka obrócona, gdy dropdown otwarty */
+.navbar-user-section span.active::after {
+    transform: rotate(180deg);
+}
+
+/* Ukrycie menu dropdown (jeśli showDropdown === false) */
+.username-dropdown.hidden {
+    display: none;
+}
