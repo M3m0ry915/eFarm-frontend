@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import { useAuth } from '../../AuthContext.jsx';
 
-
 const FarmDetails = () => {
     const [farmData, setFarmData] = useState(null);
     const [editMode, setEditMode] = useState(false);
@@ -23,25 +22,32 @@ const FarmDetails = () => {
     const { user, userRoles, username, isAuthenticated } = useAuth();
     const navigate = useNavigate();
 
-
     useEffect(() => {
         if (!isAuthenticated) {
             navigate('/sign-in');
             return;
         }
 
-        const userRole = user.roles.includes('ROLE_FARM_OWNER')
+        const role = user.roles.includes('ROLE_FARM_OWNER')
             ? 'OWNER'
             : user.roles.includes('ROLE_FARM_MANAGER')
                 ? 'MANAGER'
                 : user.roles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')
                     ? 'OPERATOR'
                     : 'OTHER_ROLE';
-        setUserRole(userRole);
+        setUserRole(role);
 
+        // Oryginalny kod pobierający dane gospodarstwa z backendu
+        /*
         fetchFarmDetails();
+        */
+
+        // Użycie mockowanych danych
+        fetchMockFarmDetails();
     }, [navigate, isAuthenticated, userRoles, user]);
 
+    // Oryginalna funkcja pobierająca dane z backendu
+    /*
     const fetchFarmDetails = async () => {
         try {
             const response = await fetch('/api/farm/details', {
@@ -73,6 +79,36 @@ const FarmDetails = () => {
             setErrorMessage(`Error: ${error.message}`);
         }
     };
+    */
+
+    // Funkcja pobierająca mockowane dane
+    const fetchMockFarmDetails = () => {
+        // Mockowane dane gospodarstwa
+        const mockFarmData = {
+            farmName: 'Gospodarstwo Rolne Kowalski',
+            farmNumber: 'FARM12345',
+            feedNumber: 'FEED67890',
+            sanitaryRegisterNumber: 'SANITARY54321',
+            street: 'Wiejska',
+            buildingNumber: '12A',
+            zipCode: '00-001',
+            city: 'Warszawa',
+            activationCodeExpireDate: '2024-12-31', // Jeśli potrzebne
+        };
+
+        setFarmData(mockFarmData);
+        setFormData({
+            farmName: mockFarmData.farmName || '',
+            farmNumber: mockFarmData.farmNumber || '',
+            feedNumber: mockFarmData.feedNumber || '',
+            sanitaryRegisterNumber: mockFarmData.sanitaryRegisterNumber || '',
+            street: mockFarmData.street || '',
+            buildingNumber: mockFarmData.buildingNumber || '',
+            zipCode: mockFarmData.zipCode || '',
+            city: mockFarmData.city || ''
+        });
+    };
+
     const toggleEditMode = () => {
         setEditMode(!editMode);
         setSuccessMessage('');
@@ -107,6 +143,8 @@ const FarmDetails = () => {
         setErrorMessage('');
         setSuccessMessage('');
 
+        // Oryginalny kod wysyłający dane do backendu
+        /*
         try {
             const response = await fetch('/api/farm/details', {
                 method: 'PUT',
@@ -131,21 +169,31 @@ const FarmDetails = () => {
         } catch (error) {
             setErrorMessage(`Error: ${error.message}`);
         }
+        */
+
+        // Mockowanie akcji zapisu danych
+        // Symulujemy udane zapisanie danych i aktualizujemy stan
+        setSuccessMessage('Dane gospodarstwa zostały zaktualizowane.');
+        setFarmData({
+            ...farmData,
+            ...formData,
+        });
+        setEditMode(false);
     };
 
     return (
         <div>
             <Navbar userRole={userRole} username={username} />
             <div style={{ padding: '20px' }}>
-                <h2>Farm Details</h2>
+                <h2>Szczegóły Gospodarstwa</h2>
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                 {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
                 {farmData ? (
                     editMode ? (
-                        // Edit Mode Form
+                        // Formularz w trybie edycji
                         <form onSubmit={handleSubmit}>
                             <div>
-                                <label>Farm Name:</label>
+                                <label>Nazwa Gospodarstwa:</label>
                                 <input
                                     type="text"
                                     name="farmName"
@@ -154,7 +202,7 @@ const FarmDetails = () => {
                                 />
                             </div>
                             <div>
-                                <label>Farm Number:</label>
+                                <label>Numer Gospodarstwa:</label>
                                 <input
                                     type="text"
                                     name="farmNumber"
@@ -163,7 +211,7 @@ const FarmDetails = () => {
                                 />
                             </div>
                             <div>
-                                <label>Feed Number:</label>
+                                <label>Numer Paszowy:</label>
                                 <input
                                     type="text"
                                     name="feedNumber"
@@ -172,7 +220,7 @@ const FarmDetails = () => {
                                 />
                             </div>
                             <div>
-                                <label>Sanitary Register Number:</label>
+                                <label>Numer Rejestru Sanitarnego:</label>
                                 <input
                                     type="text"
                                     name="sanitaryRegisterNumber"
@@ -181,7 +229,7 @@ const FarmDetails = () => {
                                 />
                             </div>
                             <div>
-                                <label>Street:</label>
+                                <label>Ulica:</label>
                                 <input
                                     type="text"
                                     name="street"
@@ -190,7 +238,7 @@ const FarmDetails = () => {
                                 />
                             </div>
                             <div>
-                                <label>Building Number:</label>
+                                <label>Numer Budynku:</label>
                                 <input
                                     type="text"
                                     name="buildingNumber"
@@ -199,7 +247,7 @@ const FarmDetails = () => {
                                 />
                             </div>
                             <div>
-                                <label>ZIP Code:</label>
+                                <label>Kod Pocztowy:</label>
                                 <input
                                     type="text"
                                     name="zipCode"
@@ -208,7 +256,7 @@ const FarmDetails = () => {
                                 />
                             </div>
                             <div>
-                                <label>City:</label>
+                                <label>Miasto:</label>
                                 <input
                                     type="text"
                                     name="city"
@@ -216,50 +264,50 @@ const FarmDetails = () => {
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <button type="submit">Save Changes</button>
+                            <button type="submit">Zapisz Zmiany</button>
                             <button type="button" onClick={handleCancelEdit}>
-                                Cancel
+                                Anuluj
                             </button>
                         </form>
                     ) : (
-                        // View Mode
+                        // Tryb wyświetlania
                         <div>
                             <p>
-                                <strong>Farm Name:</strong> {farmData.farmName}
+                                <strong>Nazwa Gospodarstwa:</strong> {farmData.farmName}
                             </p>
                             <p>
-                                <strong>Farm Number:</strong> {farmData.farmNumber}
+                                <strong>Numer Gospodarstwa:</strong> {farmData.farmNumber}
                             </p>
                             <p>
-                                <strong>Feed Number:</strong> {farmData.feedNumber}
+                                <strong>Numer Paszowy:</strong> {farmData.feedNumber}
                             </p>
                             <p>
-                                <strong>Sanitary Register Number:</strong> {farmData.sanitaryRegisterNumber}
+                                <strong>Numer Rejestru Sanitarnego:</strong> {farmData.sanitaryRegisterNumber}
                             </p>
                             <p>
-                                <strong>Street:</strong> {farmData.street}
+                                <strong>Ulica:</strong> {farmData.street}
                             </p>
                             <p>
-                                <strong>Building Number:</strong> {farmData.buildingNumber}
+                                <strong>Numer Budynku:</strong> {farmData.buildingNumber}
                             </p>
                             <p>
-                                <strong>ZIP Code:</strong> {farmData.zipCode}
+                                <strong>Kod Pocztowy:</strong> {farmData.zipCode}
                             </p>
                             <p>
-                                <strong>City:</strong> {farmData.city}
+                                <strong>Miasto:</strong> {farmData.city}
                             </p>
-                            {userRole === 'OWNER' && farmData.expireCodeInfo && (
+                            {userRole === 'OWNER' && farmData.activationCodeExpireDate && (
                                 <p>
-                                    <strong>Activation Code Expires On:</strong> {farmData.expireCodeInfo}
+                                    <strong>Kod Aktywacyjny Wygasa:</strong> {farmData.activationCodeExpireDate}
                                 </p>
                             )}
                             {(userRole === 'OWNER' || userRole === 'MANAGER') && (
-                                <button onClick={toggleEditMode}>Edit Farm Details</button>
+                                <button onClick={toggleEditMode}>Edytuj Dane Gospodarstwa</button>
                             )}
                         </div>
                     )
                 ) : (
-                    <p>Loading farm details...</p>
+                    <p>Ładowanie danych gospodarstwa...</p>
                 )}
             </div>
         </div>

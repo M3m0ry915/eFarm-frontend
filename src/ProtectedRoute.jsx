@@ -6,6 +6,7 @@ const ProtectedRoute = ({ requiredRoles = [] }) => {
     sessionStorage.setItem('username', 'exampleUser');
     sessionStorage.setItem('password', 'password');
     sessionStorage.setItem('roles', JSON.stringify(['ROLE_FARM_OWNER']));
+    sessionStorage.setItem('expireCodeInfo', 'Kod aktywacyjny wygasa za 3 dni.');
 
     const { user, loading } = useAuth();
     console.log('ProtectedRoute:', user);
