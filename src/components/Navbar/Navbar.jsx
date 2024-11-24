@@ -1,13 +1,29 @@
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import {Link, useNavigate} from 'react-router-dom';
 import { useState } from 'react';
+import { useAuth } from '../../AuthContext.jsx';
 
-const Navbar = ({ onLogout, userRole, username }) => {
+const Navbar = () => {
     const [showDropdown, setShowDropdown] = useState(false);
+    const { user, handleLogout } = useAuth();
+    const navigate = useNavigate();
 
     const handleUsernameClick = () => {
         setShowDropdown(!showDropdown);
     };
+
+    const handleLogoutClick = () => {
+        handleLogout();
+        navigate('/sign-in');
+    };
+
+    const userRole = user.roles.includes('ROLE_FARM_OWNER')
+        ? 'OWNER'
+        : user.roles.includes('ROLE_FARM_MANAGER')
+            ? 'MANAGER'
+            : user.roles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')
+                ? 'OPERATOR'
+                : 'OTHER_ROLE';
+
     return (
         <nav style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', backgroundColor: '#f8f8f8' }}>
             <div style={{ display: 'flex', gap: '10px' }}>
@@ -27,15 +43,15 @@ const Navbar = ({ onLogout, userRole, username }) => {
                     <button>Ewidencja</button>
                 </Link>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', position: 'relative' }}>
+            <div style={{display: 'flex', alignItems: 'center', gap: '10px', position: 'relative'}}>
                 {(userRole === 'OWNER' || userRole === 'MANAGER') && (
                     <Link to="/signup-user">
                         <button>Zarejestruj Użytkownika</button>
                     </Link>
                 )}
-                <div style={{ position: 'relative' }}>
-          <span onClick={handleUsernameClick} style={{ cursor: 'pointer' }}>
-            {username}
+                <div style={{position: 'relative'}}>
+          <span onClick={handleUsernameClick} style={{cursor: 'pointer'}}>
+            {user.username}
           </span>
                     {showDropdown && (
                         <div
@@ -48,28 +64,25 @@ const Navbar = ({ onLogout, userRole, username }) => {
                                 zIndex: 1,
                             }}
                         >
-                            <Link to="/farm-details" onClick={() => setShowDropdown(false)}>
-                                <div style={{ padding: '10px' }}>Farm Details</div>
-                            </Link>
+                            {(userRole === 'OWNER' || userRole === 'MANAGER') && (
+                                <Link to="/farm-details" onClick={() => setShowDropdown(false)}>
+                                    <div style={{padding: '10px'}}>Farm Details</div>
+                                </Link>
+                            )}
                             <Link to="/change-password" onClick={() => setShowDropdown(false)}>
-                                <div style={{ padding: '10px' }}>Change Password</div>
+                                <div style={{padding: '10px'}}>Change Password</div>
                             </Link>
-                            <Link to="/new-activation-code" onClick={() => setShowDropdown(false)}>
-                                <div style={{ padding: '10px' }}>New Activation Code</div>
-                            </Link>
+                            {userRole === 'OWNER' && (
+                                <Link to="/new-activation-code" onClick={() => setShowDropdown(false)}>
+                                    <div style={{padding: '10px'}}>New Activation Code</div>
+                                </Link>
+                            )}
                         </div>
                     )}
                 </div>
-                <button onClick={onLogout}>Wyloguj</button>
+                <button onClick={handleLogoutClick}>Wyloguj</button>
             </div>
         </nav>
     );
 };
-
-Navbar.propTypes = {
-    onLogout: PropTypes.func.isRequired,
-    userRole: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
-};
-
 export default Navbar;

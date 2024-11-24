@@ -1,10 +1,10 @@
-// components/FarmDetails/FarmDetails.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
-import PropTypes from 'prop-types';
+import { useAuth } from '../../AuthContext.jsx';
 
-const FarmDetails = ({ onLogout }) => {
+
+const FarmDetails = () => {
     const [farmData, setFarmData] = useState(null);
     const [editMode, setEditMode] = useState(false);
     const [formData, setFormData] = useState({
@@ -20,32 +20,27 @@ const FarmDetails = ({ onLogout }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [userRole, setUserRole] = useState('');
-    const [username, setUsername] = useState('');
+    const { user, userRoles, username, isAuthenticated } = useAuth();
     const navigate = useNavigate();
 
 
     useEffect(() => {
-        const storedRoles = sessionStorage.getItem('roles');
-        const username = sessionStorage.getItem('username');
-
-        setUsername(username);
-
-        if (!username || !storedRoles) {
+        if (!isAuthenticated) {
             navigate('/sign-in');
             return;
         }
 
-        const roles = JSON.parse(storedRoles);
+        const userRole = user.roles.includes('ROLE_FARM_OWNER')
+            ? 'OWNER'
+            : user.roles.includes('ROLE_FARM_MANAGER')
+                ? 'MANAGER'
+                : user.roles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')
+                    ? 'OPERATOR'
+                    : 'OTHER_ROLE';
+        setUserRole(userRole);
 
-        if (roles.includes('ROLE_FARM_OWNER')) {
-            setUserRole('OWNER');
-        } else if (roles.includes('ROLE_FARM_MANAGER')) {
-            setUserRole('MANAGER');
-        } else {
-            setUserRole('OTHER_ROLE');
-        }
         fetchFarmDetails();
-    }, [navigate]);
+    }, [navigate, isAuthenticated, userRoles, user]);
 
     const fetchFarmDetails = async () => {
         try {
@@ -140,7 +135,7 @@ const FarmDetails = ({ onLogout }) => {
 
     return (
         <div>
-            <Navbar onLogout={onLogout} userRole={userRole} username={username} />
+            <Navbar userRole={userRole} username={username} />
             <div style={{ padding: '20px' }}>
                 <h2>Farm Details</h2>
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
@@ -253,9 +248,9 @@ const FarmDetails = ({ onLogout }) => {
                             <p>
                                 <strong>City:</strong> {farmData.city}
                             </p>
-                            {userRole === 'OWNER' && farmData.expireCodeDate && (
+                            {userRole === 'OWNER' && farmData.expireCodeInfo && (
                                 <p>
-                                    <strong>Activation Code Expires On:</strong> {farmData.expireCodeDate}
+                                    <strong>Activation Code Expires On:</strong> {farmData.expireCodeInfo}
                                 </p>
                             )}
                             {(userRole === 'OWNER' || userRole === 'MANAGER') && (
@@ -269,9 +264,6 @@ const FarmDetails = ({ onLogout }) => {
             </div>
         </div>
     );
-};
-FarmDetails.propTypes = {
-    onLogout: PropTypes.func.isRequired,
 };
 
 export default FarmDetails;

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
-import PropTypes from 'prop-types';
+import { useAuth } from '../../AuthContext.jsx';
 
-const NewActivationCode = ({ onLogout, onExpireCodeInfoUpdate }) => {
+const NewActivationCode = () => {
     const [formData, setFormData] = useState({
         password: '',
         newActivationCode: '',
@@ -11,28 +11,29 @@ const NewActivationCode = ({ onLogout, onExpireCodeInfoUpdate }) => {
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [userRole, setUserRole] = useState('');
-    const [username, setUsername] = useState('');
+    const {
+        isAuthenticated,
+        userRoles = [],
+        username,
+        user,
+        handleLogout,
+        handleExpireCodeInfoUpdate,
+    } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
-        const storedRoles = sessionStorage.getItem('roles');
-        const username = sessionStorage.getItem('username');
-
-        setUsername(username);
-
-        if (!username || !storedRoles) {
+        if (!isAuthenticated) {
             navigate('/sign-in');
             return;
         }
 
-        const roles = JSON.parse(storedRoles);
-
-        if (roles.includes('ROLE_FARM_MANAGER') || roles.includes('ROLE_FARM_OWNER')) {
-            setUserRole('MANAGER_OR_OWNER');
-        } else {
-            setUserRole('OTHER_ROLE');
+        if (!user.roles.includes('ROLE_FARM_OWNER')) {
+            navigate('/not-authorized');
+            return;
         }
-    }, [navigate]);
+
+        setUserRole('OWNER');
+    }, [navigate, isAuthenticated, userRoles, user]);
 
     const handleInputChange = (e) => {
         setFormData({
@@ -76,8 +77,9 @@ const NewActivationCode = ({ onLogout, onExpireCodeInfoUpdate }) => {
             });
 
             if (response.ok) {
+                //const data = await response.json();
                 setSuccessMessage('Activation code updated successfully.');
-                onExpireCodeInfoUpdate(null);
+                handleExpireCodeInfoUpdate(null);
                 setTimeout(() => {
                     navigate('/dashboard');
                 }, 2000);
@@ -92,7 +94,7 @@ const NewActivationCode = ({ onLogout, onExpireCodeInfoUpdate }) => {
 
     return (
         <div>
-            <Navbar onLogout={onLogout} userRole={userRole} username={username} />
+            <Navbar onLogout={handleLogout} userRole={userRole} username={username} />
             <div style={{ padding: '20px' }}>
                 <h2>New Activation Code</h2>
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
@@ -123,9 +125,5 @@ const NewActivationCode = ({ onLogout, onExpireCodeInfoUpdate }) => {
     );
 };
 
-NewActivationCode.propTypes = {
-    onLogout: PropTypes.func.isRequired,
-    onExpireCodeInfoUpdate: PropTypes.func.isRequired,
-};
 
 export default NewActivationCode;

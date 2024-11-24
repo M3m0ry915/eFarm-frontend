@@ -1,36 +1,32 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
-import PropTypes from 'prop-types';
+import { useAuth } from '../../AuthContext.jsx';
 
-const EquipmentList = ({ onLogout }) => {
+const EquipmentList = () => {
     const [equipmentList, setEquipmentList] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [userRole, setUserRole] = useState('');
-    const [username, setUsername] = useState('');
+    const {user, userRoles, username, isAuthenticated } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
-        const storedRoles = sessionStorage.getItem('roles');
-        const username = sessionStorage.getItem('username');
-
-        setUsername(username);
-
-        if (!username || !storedRoles) {
+        if (!isAuthenticated) {
             navigate('/sign-in');
             return;
         }
 
-        const roles = JSON.parse(storedRoles);
+        const userRole = user.roles.includes('ROLE_FARM_OWNER')
+            ? 'OWNER'
+            : user.roles.includes('ROLE_FARM_MANAGER')
+                ? 'MANAGER'
+                : user.roles.includes('ROLE_FARM_EQUIPMENT_OPERATOR')
+                    ? 'OPERATOR'
+                    : 'OTHER_ROLE';
+        setUserRole(userRole);
 
-        if (roles.includes('ROLE_FARM_MANAGER') || roles.includes('ROLE_FARM_OWNER')) {
-            setUserRole('MANAGER_OR_OWNER');
-        } else {
-            navigate('/not-authorized');
-            return;
-        }
         fetchEquipmentList('');
-    }, []);
+    }, [navigate, isAuthenticated, userRoles, user]);
 
     const fetchEquipmentList = async (query) => {
         try {
@@ -69,7 +65,7 @@ const EquipmentList = ({ onLogout }) => {
 
     return (
         <div>
-            <Navbar onLogout={onLogout} userRole={userRole} username={username} />
+            <Navbar userRole={userRole} username={username} />
             <div style={{ padding: '20px' }}>
                 <h2>Lista Sprzętu</h2>
                 <input
@@ -91,9 +87,9 @@ const EquipmentList = ({ onLogout }) => {
                     <tbody>
                     {equipmentList.map((equipment) => (
                         <tr
-                            key={equipment.id}
+                            key={equipment.equipmentId}
                             style={{cursor: 'pointer'}}
-                            onClick={() => handleEquipmentClick(equipment.id)}
+                            onClick={() => handleEquipmentClick(equipment.equipmentId)}
                         >
                             <td style={tableCellStyle} data-label="Nazwa Sprzętu">
                                 {equipment.equipmentName}
@@ -127,8 +123,5 @@ const tableCellStyle = {
     padding: '8px',
 };
 
-EquipmentList.propTypes = {
-    onLogout: PropTypes.func.isRequired,
-};
 
 export default EquipmentList;

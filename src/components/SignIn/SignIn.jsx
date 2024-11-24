@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useAuth } from '../../AuthContext.jsx';
 
-const SignIn = ({ onLogin }) => {
+const SignIn = () => {
+    const { handleLogin } = useAuth();
     const [formData, setFormData] = useState({
         username: '',
         password: ''
     });
     const [errorMessage, setErrorMessage] = useState('');
-    //const [expireCodeInfo, setExpireCodeInfo] = useState('');
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -67,14 +67,15 @@ const SignIn = ({ onLogin }) => {
             } else if (response.ok) {
                 sessionStorage.setItem('username', data.username);
                 sessionStorage.setItem('roles', JSON.stringify(data.roles));
-
-                onLogin(data.expireCodeInfo || null);
+                const expireCodeInfo = data.expireCodeInfo || null;
+                sessionStorage.setItem('expireCodeInfo', expireCodeInfo);
+                handleLogin(expireCodeInfo);
                 navigate('/dashboard');
             } else {
-            setErrorMessage(data.message || 'Invalid login credentials.');
+                setErrorMessage(data.message || 'Invalid login credentials.');
             }
         } catch (error) {
-        setErrorMessage(`Error: ${error.message}`);
+            setErrorMessage(`Error: ${error.message}`);
         }
     };
 
@@ -99,10 +100,6 @@ const SignIn = ({ onLogin }) => {
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         </div>
     );
-};
-
-SignIn.propTypes = {
-    onLogin: PropTypes.func.isRequired,
 };
 
 export default SignIn;
