@@ -14,6 +14,10 @@ const EquipmentList = () => {
     const { user, username, isAuthenticated } = useAuth();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        document.title = 'Sprzęt';
+    }, []);
+
     const mockEquipmentData = [
         {
             equipmentId: 1,

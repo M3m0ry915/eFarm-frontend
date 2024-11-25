@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext.jsx';
 import './SignIn.css'; // Importujemy plik CSS
@@ -11,6 +11,10 @@ const SignIn = () => {
     });
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = 'Logowanie';
+    }, []);
 
     const handleInputChange = (e) => {
         setFormData({

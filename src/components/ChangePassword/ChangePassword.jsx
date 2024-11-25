@@ -18,6 +18,10 @@ const ChangePassword = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        document.title = 'Zmiana hasła';
+    }, []);
+
+    useEffect(() => {
         if (!isAuthenticated) {
             navigate('/sign-in');
             return;
@@ -98,7 +102,7 @@ const ChangePassword = () => {
         <div className="change-password-container">
             <Navbar userRole={userRole} username={username} />
             <div>
-                <h2>Zmień hasło</h2>
+                <h2>Zmiana hasła</h2>
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
                 {successMessage && <p className="success-message">{successMessage}</p>}
                 <form onSubmit={handleSubmit}>

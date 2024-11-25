@@ -24,6 +24,10 @@ const FarmDetails = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        document.title = 'Szczegóły gospodarstwa';
+    }, []);
+
+    useEffect(() => {
         if (!isAuthenticated) {
             navigate('/sign-in');
             return;

@@ -23,6 +23,10 @@ const NewActivationCode = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        document.title = 'Nowy kod aktywacyjny';
+    }, []);
+
+    useEffect(() => {
         if (!isAuthenticated) {
             navigate('/sign-in');
             return;
@@ -96,12 +100,12 @@ const NewActivationCode = () => {
         <div className="new-activation-code-container">
             <Navbar onLogout={handleLogout} userRole={userRole} username={username} />
             <div>
-                <h2>New Activation Code</h2>
+                <h2>Aktualizacja kodu</h2>
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
                 {successMessage && <p className="success-message">{successMessage}</p>}
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label>Password:</label>
+                        <label>Hasło:</label>
                         <input
                             type="password"
                             name="password"
@@ -110,7 +114,7 @@ const NewActivationCode = () => {
                         />
                     </div>
                     <div>
-                        <label>New Activation Code:</label>
+                        <label>Nowy kod:</label>
                         <input
                             type="text"
                             name="newActivationCode"
@@ -118,7 +122,7 @@ const NewActivationCode = () => {
                             onChange={handleInputChange}
                         />
                     </div>
-                    <button type="submit">Submit</button>
+                    <button type="submit">Zatwierdź</button>
                 </form>
             </div>
         </div>

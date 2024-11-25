@@ -95,15 +95,15 @@ const Navbar = () => {
                         <div className="username-dropdown">
                             {(userRole === 'OWNER' || userRole === 'MANAGER') && (
                                 <Link to="/farm-details" onClick={() => setShowDropdown(false)}>
-                                    <div>Farm Details</div>
+                                    <div>szczegóły farmy</div>
                                 </Link>
                             )}
                             <Link to="/change-password" onClick={() => setShowDropdown(false)}>
-                                <div>Change Password</div>
+                                <div>zmiana hasła</div>
                             </Link>
                             {userRole === 'OWNER' && (
                                 <Link to="/new-activation-code" onClick={() => setShowDropdown(false)}>
-                                    <div>New Activation Code</div>
+                                    <div>Aktualizacja kodu</div>
                                 </Link>
                             )}
                             <div onClick={handleLogoutClick} style={{cursor: 'pointer'}}>

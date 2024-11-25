@@ -10,8 +10,11 @@ const Dashboard = () => {
     const { user, expireCodeInfo, handleLogout, handleExpireCodeInfoUpdate } = useAuth();
     const [showExpireCodeInfo, setShowExpireCodeInfo] = useState(!!expireCodeInfo);
     const [userRole, setUserRole] = useState('');
-
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = 'Gospodarstwo';
+    }, []);
 
     useEffect(() => {
         //const username = sessionStorage.getItem('username');

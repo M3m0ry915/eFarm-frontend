@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignupFarm.css'; // Importujemy plik CSS
 
@@ -16,6 +16,10 @@ const SignupFarm = () => {
     const [responseMessage, setResponseMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = 'Rejestracja farmy';
+    }, []);
 
     const handleInputChange = (e) => {
         setFormData({
