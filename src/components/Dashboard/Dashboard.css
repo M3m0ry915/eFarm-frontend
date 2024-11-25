@@ -1,41 +1,46 @@
 /* Styl kontenera dashboard */
 .dashboard-container {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f6f9;
+    background-color: #f4f6f9; /* Jasne, neutralne tło */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 /* Styl treści dashboard */
 .dashboard-content {
     padding: 20px;
     flex: 1;
+    max-width: 1200px; /* Maksymalna szerokość dla treści */
+    margin: 0 auto; /* Wyśrodkowanie */
 }
 
+/* Nagłówki */
 h2 {
-    color: #013220;
+    color: #013220; /* Zielony odcień */
     font-size: 26px;
     font-weight: bold;
     margin-bottom: 20px;
+    text-align: left;
 }
 
 /* Styl powiadomienia */
 .notification {
-    background-color: #fff7e6;
+    background-color: #fff7e6; /* Jasne tło ostrzeżenia */
     border: 1px solid orange;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    margin-bottom: 20px; /* Odstęp od innych elementów */
     font-size: 16px;
-    color: #333;
+    color: #333; /* Kolor tekstu */
 }
 
 /* Styl przycisków w powiadomieniu */
 .notification-buttons {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-end; /* Przyciski wyrównane do prawej */
     gap: 10px;
     margin-top: 10px;
 }
@@ -49,37 +54,45 @@ h2 {
 }
 
 .button-ok {
-    background-color: #4CAF50;
+    background-color: #4CAF50; /* Zielony */
     color: white;
 }
 
 .button-ok:hover {
-    background-color: #45a049;
+    background-color: #45a049; /* Ciemniejszy zielony */
 }
 
 .button-update {
-    background-color: #f39c12;
+    background-color: #f39c12; /* Pomarańczowy */
     color: white;
 }
 
 .button-update:hover {
-    background-color: #e67e22;
+    background-color: #e67e22; /* Ciemniejszy pomarańczowy */
 }
 
 /* Styl segmentów dashboard */
 .dashboard-segments {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-wrap: wrap; /* Segmenty automatycznie układają się w linie */
+    gap: 20px; /* Odstępy między segmentami */
+    margin-top: 20px;
 }
 
 .segment {
-    background-color: white;
+    background-color: white; /* Białe tło dla segmentów */
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Delikatny cień */
     padding: 20px;
-    flex: 1 1 calc(50% - 20px); /* Dwa segmenty w rzędzie */
+    flex: 1 1 calc(50% - 20px); /* Dwa segmenty w rzędzie na większych ekranach */
     box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efekt hover na segmentach */
+.segment:hover {
+    transform: translateY(-5px); /* Unoszenie segmentu */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Zwiększenie cienia */
 }
 
 /* Responsywność dla mniejszych ekranów */
@@ -87,4 +100,30 @@ h2 {
     .segment {
         flex: 1 1 100%; /* Segmenty na pełnej szerokości na mniejszych ekranach */
     }
+
+    h2 {
+        font-size: 22px; /* Mniejsza czcionka dla nagłówka */
+    }
+
+    .dashboard-content {
+        padding: 15px; /* Mniejsze odstępy */
+    }
+}
+
+/* Styl listy użytkowników */
+.user-list {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+/* Styl listy działek */
+.landparcel-list {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
