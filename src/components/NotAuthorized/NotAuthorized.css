@@ -1,0 +1,43 @@
+/* Ogólny styl kontenera */
+.not-authorized-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f8f8f8;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 20px;
+}
+
+/* Nagłówek komunikatu */
+.not-authorized-container h2 {
+    color: #d32f2f; /* Czerwony kolor informujący o błędzie */
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Styl przycisku */
+.not-authorized-container button {
+    background-color: #007bff; /* Niebieski przycisk */
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.not-authorized-container button:hover {
+    background-color: #0056b3; /* Ciemniejszy niebieski przy hoverze */
+}
+
+/* Styl linku */
+.not-authorized-container a {
+    text-decoration: none; /* Usunięcie podkreślenia z linku */
+}

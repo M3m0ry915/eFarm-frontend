@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import { useAuth } from '../../AuthContext.jsx';
+import './FarmDetails.css'; // Importujemy plik CSS
 
 const FarmDetails = () => {
     const [farmData, setFarmData] = useState(null);
@@ -182,134 +183,115 @@ const FarmDetails = () => {
     };
 
     return (
-        <div>
+        <div className="farm-details-container">
             <Navbar userRole={userRole} username={username} />
-            <div style={{ padding: '20px' }}>
-                <h2>Szczegóły Gospodarstwa</h2>
-                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-                {farmData ? (
-                    editMode ? (
-                        // Formularz w trybie edycji
-                        <form onSubmit={handleSubmit}>
-                            <div>
-                                <label>Nazwa Gospodarstwa:</label>
-                                <input
-                                    type="text"
-                                    name="farmName"
-                                    value={formData.farmName}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div>
-                                <label>Numer Gospodarstwa:</label>
-                                <input
-                                    type="text"
-                                    name="farmNumber"
-                                    value={formData.farmNumber}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div>
-                                <label>Numer Paszowy:</label>
-                                <input
-                                    type="text"
-                                    name="feedNumber"
-                                    value={formData.feedNumber}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div>
-                                <label>Numer Rejestru Sanitarnego:</label>
-                                <input
-                                    type="text"
-                                    name="sanitaryRegisterNumber"
-                                    value={formData.sanitaryRegisterNumber}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div>
-                                <label>Ulica:</label>
-                                <input
-                                    type="text"
-                                    name="street"
-                                    value={formData.street}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div>
-                                <label>Numer Budynku:</label>
-                                <input
-                                    type="text"
-                                    name="buildingNumber"
-                                    value={formData.buildingNumber}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div>
-                                <label>Kod Pocztowy:</label>
-                                <input
-                                    type="text"
-                                    name="zipCode"
-                                    value={formData.zipCode}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div>
-                                <label>Miasto:</label>
-                                <input
-                                    type="text"
-                                    name="city"
-                                    value={formData.city}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
+            <h2>Szczegóły Gospodarstwa</h2>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            {successMessage && <p className="success-message">{successMessage}</p>}
+            {farmData ? (
+                editMode ? (
+                    // Formularz w trybie edycji
+                    <form onSubmit={handleSubmit}>
+                        <div>
+                            <label>Nazwa Gospodarstwa:</label>
+                            <input
+                                type="text"
+                                name="farmName"
+                                value={formData.farmName}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Numer Gospodarstwa:</label>
+                            <input
+                                type="text"
+                                name="farmNumber"
+                                value={formData.farmNumber}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Numer Paszowy:</label>
+                            <input
+                                type="text"
+                                name="feedNumber"
+                                value={formData.feedNumber}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Numer Rejestru Sanitarnego:</label>
+                            <input
+                                type="text"
+                                name="sanitaryRegisterNumber"
+                                value={formData.sanitaryRegisterNumber}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Ulica:</label>
+                            <input
+                                type="text"
+                                name="street"
+                                value={formData.street}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Numer Budynku:</label>
+                            <input
+                                type="text"
+                                name="buildingNumber"
+                                value={formData.buildingNumber}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Kod Pocztowy:</label>
+                            <input
+                                type="text"
+                                name="zipCode"
+                                value={formData.zipCode}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Miasto:</label>
+                            <input
+                                type="text"
+                                name="city"
+                                value={formData.city}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-buttons">
                             <button type="submit">Zapisz Zmiany</button>
                             <button type="button" onClick={handleCancelEdit}>
                                 Anuluj
                             </button>
-                        </form>
-                    ) : (
-                        // Tryb wyświetlania
-                        <div>
-                            <p>
-                                <strong>Nazwa Gospodarstwa:</strong> {farmData.farmName}
-                            </p>
-                            <p>
-                                <strong>Numer Gospodarstwa:</strong> {farmData.farmNumber}
-                            </p>
-                            <p>
-                                <strong>Numer Paszowy:</strong> {farmData.feedNumber}
-                            </p>
-                            <p>
-                                <strong>Numer Rejestru Sanitarnego:</strong> {farmData.sanitaryRegisterNumber}
-                            </p>
-                            <p>
-                                <strong>Ulica:</strong> {farmData.street}
-                            </p>
-                            <p>
-                                <strong>Numer Budynku:</strong> {farmData.buildingNumber}
-                            </p>
-                            <p>
-                                <strong>Kod Pocztowy:</strong> {farmData.zipCode}
-                            </p>
-                            <p>
-                                <strong>Miasto:</strong> {farmData.city}
-                            </p>
-                            {userRole === 'OWNER' && farmData.activationCodeExpireDate && (
-                                <p>
-                                    <strong>Kod Aktywacyjny Wygasa:</strong> {farmData.activationCodeExpireDate}
-                                </p>
-                            )}
-                            {(userRole === 'OWNER' || userRole === 'MANAGER') && (
-                                <button onClick={toggleEditMode}>Edytuj Dane Gospodarstwa</button>
-                            )}
                         </div>
-                    )
+                    </form>
                 ) : (
-                    <p>Ładowanie danych gospodarstwa...</p>
-                )}
-            </div>
+                    <div className="farm-details">
+                        <p><strong>Nazwa Gospodarstwa:</strong> {farmData.farmName}</p>
+                        <p><strong>Numer Gospodarstwa:</strong> {farmData.farmNumber}</p>
+                        <p><strong>Numer Paszowy:</strong> {farmData.feedNumber}</p>
+                        <p><strong>Numer Rejestru Sanitarnego:</strong> {farmData.sanitaryRegisterNumber}</p>
+                        <p><strong>Ulica:</strong> {farmData.street}</p>
+                        <p><strong>Numer Budynku:</strong> {farmData.buildingNumber}</p>
+                        <p><strong>Kod Pocztowy:</strong> {farmData.zipCode}</p>
+                        <p><strong>Miasto:</strong> {farmData.city}</p>
+                        {userRole === 'OWNER' && farmData.activationCodeExpireDate && (
+                            <p><strong>Kod Aktywacyjny Wygasa:</strong> {farmData.activationCodeExpireDate}</p>
+                        )}
+                        {(userRole === 'OWNER' || userRole === 'MANAGER') && (
+                            <button className="edit-button" onClick={toggleEditMode}>Edytuj Dane Gospodarstwa</button>
+                        )}
+                    </div>
+                )
+            ) : (
+                <div className="loading-container">Ładowanie danych gospodarstwa...</div>
+            )}
         </div>
     );
 };

@@ -1,0 +1,56 @@
+/* Styl ogólny dla szczegółów gospodarstwa */
+.farm-details-container {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Styl kontenera szczegółów gospodarstwa */
+.farm-details {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.farm-details p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.farm-details strong {
+    color: #013220;
+}
+
+/* Styl przycisku powrotu */
+.back-button {
+    background-color: rgb(250, 175, 55);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.back-button:hover {
+    background-color: rgb(220, 140, 40);
+}
+
+/* Styl loading container */
+.loading-container {
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+}
+
+/* Styl nagłówka */
+h2 {
+    font-size: 28px;
+    color: #013220;
+    font-weight: bold;
+    margin-bottom: 20px;
+}

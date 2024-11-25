@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
-import { useAuth} from '../../AuthContext.jsx';
+import { useAuth } from '../../AuthContext.jsx';
+import './ChangePassword.css'; // Importujemy plik CSS
 
 const ChangePassword = () => {
     const [formData, setFormData] = useState({
@@ -94,12 +95,12 @@ const ChangePassword = () => {
     };
 
     return (
-        <div>
+        <div className="change-password-container">
             <Navbar userRole={userRole} username={username} />
-            <div style={{ padding: '20px' }}>
+            <div>
                 <h2>Zmień hasło</h2>
-                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+                {successMessage && <p className="success-message">{successMessage}</p>}
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label>Aktualne hasło:</label>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext.jsx';
 import ChangePasswordModal from './ChangePasswordModal';
 import EditUserModal from './EditUserModal';
+import './UserList.css'; // Dodanie pliku CSS dla stylów
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -27,7 +28,6 @@ const UserList = () => {
                     ? 'OPERATOR'
                     : 'OTHER_ROLE';
         setUserRole(role);
-
 
         // Oryginalny kod pobierający listę użytkowników z backendu
         /*
@@ -119,33 +119,33 @@ const UserList = () => {
     };
 
     return (
-        <div style={segmentStyle}>
+        <div className="user-list-container">
             <h3>Lista Użytkowników</h3>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <table className="user-list-table">
                 <thead>
                 <tr>
-                    <th style={tableHeaderStyle}>Imię</th>
-                    <th style={tableHeaderStyle}>Nazwisko</th>
-                    <th style={tableHeaderStyle}>Rola</th>
-                    <th style={tableHeaderStyle}>Aktywny</th>
-                    <th style={tableHeaderStyle}>Akcje</th>
+                    <th className="table-header">Imię</th>
+                    <th className="table-header">Nazwisko</th>
+                    <th className="table-header">Rola</th>
+                    <th className="table-header">Aktywny</th>
+                    <th className="table-header">Akcje</th>
                 </tr>
                 </thead>
                 <tbody>
                 {users.map((user) => (
-                    <tr key={user.id}>
-                        <td style={tableCellStyle}>{user.firstName}</td>
-                        <td style={tableCellStyle}>{user.lastName}</td>
-                        <td style={tableCellStyle}>{user.role}</td>
-                        <td style={tableCellStyle}>{user.active ? 'Tak' : 'Nie'}</td>
-                        <td style={tableCellStyle}>
-                            <button onClick={() => toggleActiveStatus(user.id)}>
+                    <tr key={user.id} className="table-row">
+                        <td className="table-cell">{user.firstName}</td>
+                        <td className="table-cell">{user.lastName}</td>
+                        <td className="table-cell">{user.role}</td>
+                        <td className="table-cell">{user.active ? 'Tak' : 'Nie'}</td>
+                        <td className="table-cell">
+                            <button className="action-button" onClick={() => toggleActiveStatus(user.id)}>
                                 {user.active ? 'Dezaktywuj' : 'Aktywuj'}
                             </button>
-                            <button onClick={() => handleChangePassword(user)}>
+                            <button className="action-button" onClick={() => handleChangePassword(user)}>
                                 Zmień Hasło
                             </button>
-                            <button onClick={() => handleEditUser(user)}>
+                            <button className="action-button" onClick={() => handleEditUser(user)}>
                                 Edytuj
                             </button>
                         </td>
@@ -163,22 +163,6 @@ const UserList = () => {
             )}
         </div>
     );
-};
-
-const segmentStyle = {
-    width: '100%',
-    // Dodatkowe style, aby segment zajmował odpowiednią część strony
-};
-
-const tableHeaderStyle = {
-    borderBottom: '2px solid #ddd',
-    padding: '8px',
-    textAlign: 'left',
-};
-
-const tableCellStyle = {
-    borderBottom: '1px solid #ddd',
-    padding: '8px',
 };
 
 export default UserList;

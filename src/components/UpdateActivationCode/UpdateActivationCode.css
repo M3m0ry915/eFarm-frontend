@@ -1,0 +1,95 @@
+/* Styl główny kontenera */
+.update-activation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f4f7fc;
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+}
+
+/* Nagłówek formularza */
+.update-activation-container h2 {
+    font-size: 30px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Styl formularza */
+.update-activation-container form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.update-activation-container input {
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.update-activation-container input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Styl przycisku */
+.update-activation-container button {
+    padding: 12px;
+    font-size: 16px;
+    color: white;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.update-activation-container button:hover {
+    background-color: #218838;
+}
+
+/* Styl komunikatu o powodzeniu */
+.update-activation-container .success-message {
+    font-size: 18px;
+    color: #28a745;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Styl komunikatu o błędzie */
+.update-activation-container .error-message {
+    font-size: 16px;
+    color: #d32f2f;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Przyciski do przejścia po sukcesie */
+.update-activation-container .sign-in-button {
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.update-activation-container .sign-in-button:hover {
+    background-color: #0056b3;
+}

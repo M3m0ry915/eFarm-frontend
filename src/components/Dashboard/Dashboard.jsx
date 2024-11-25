@@ -1,9 +1,10 @@
-import {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import { useAuth } from '../../AuthContext.jsx';
 import UserList from './UserList';
 import LandParcelList from '../AddLandParcel/LandParcelList';
+import './Dashboard.css'; // Dodanie pliku CSS dla stylów
 
 const Dashboard = () => {
     const { user, expireCodeInfo, handleLogout, handleExpireCodeInfoUpdate } = useAuth();
@@ -17,7 +18,6 @@ const Dashboard = () => {
         // if (!user.username || !user.roles) {
         //     navigate('/sign-in');
         // }
-
         const userRole = user.roles.includes('ROLE_FARM_OWNER')
             ? 'OWNER'
             : user.roles.includes('ROLE_FARM_MANAGER')
@@ -36,27 +36,34 @@ const Dashboard = () => {
     const handleUpdate = () => {
         navigate('/new-activation-code');
     };
+
     return (
-        <div>
-            <Navbar userRole={userRole} username={user.username} onLogout={handleLogout}/>
-            <div style={{padding: '20px'}}>
+        <div className="dashboard-container">
+            <Navbar userRole={userRole} username={user.username} onLogout={handleLogout} />
+            <div className="dashboard-content">
                 <h2>Witaj w panelu zarządzania, {user.username}!</h2>
+
                 {showExpireCodeInfo && expireCodeInfo && (
-                    <div className="notification"
-                         style={{border: '1px solid orange', padding: '10px', marginTop: '20px'}}>
+                    <div className="notification">
                         <p>{expireCodeInfo}</p>
-                        <button onClick={handleOk}>OK</button>
-                        <button onClick={handleUpdate}>Aktualizuj</button>
+                        <div className="notification-buttons">
+                            <button onClick={handleOk} className="button-ok">OK</button>
+                            <button onClick={handleUpdate} className="button-update">Aktualizuj</button>
+                        </div>
                     </div>
                 )}
-            </div>
-            <div style={dashboardStyle}>
-                {/* Segment 1: Lista użytkowników */}
-                <div style={segmentStyle}>
-                    <UserList/>
+
+                <div className="dashboard-segments">
+                    <div className="segment">
+                        <UserList />
+                    </div>
+                    {/* Segmenty 2-4: Można dodać później */}
+                    {/* <div className="segment">Segment 2</div>
+                    <div className="segment">Segment 3</div>
+                    <div className="segment">Segment 4</div> */}
                 </div>
                 {/* Segment 2: Lista działek */}
-                <div style={segmentStyle}>
+                <div>
                     <LandParcelList />
                 </div>
                 {/* Segmenty 3-4: Możesz dodać je później */}
@@ -67,14 +74,4 @@ const Dashboard = () => {
     );
 };
 
-const dashboardStyle = {
-    display: 'flex',
-    flexWrap: 'wrap',
-};
-
-const segmentStyle = {
-    flex: '1 1 50%', // Dwa segmenty w rzędzie
-    boxSizing: 'border-box',
-    padding: '10px',
-};
 export default Dashboard;

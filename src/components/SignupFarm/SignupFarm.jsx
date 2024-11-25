@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './SignupFarm.css'; // Importujemy plik CSS
 
 const SignupFarm = () => {
     const [formData, setFormData] = useState({
@@ -86,22 +87,69 @@ const SignupFarm = () => {
     };
 
     return (
-        <div>
+        <div className="signup-farm-container">
             <h2>Register Farm</h2>
-            <form onSubmit={handleSubmit}>
-                {/* Fields for farm registration */}
-                <input type="text" name="firstName" placeholder="First Name" onChange={handleInputChange} />
-                <input type="text" name="lastName" placeholder="Last Name" onChange={handleInputChange} />
-                <input type="text" name="username" placeholder="Username" onChange={handleInputChange} />
-                <input type="email" name="email" placeholder="Email" onChange={handleInputChange} />
-                <input type="password" name="password" placeholder="Password" onChange={handleInputChange} />
-                <input type="text" name="phoneNumber" placeholder="Phone Number" onChange={handleInputChange} />
-                <input type="text" name="farmName" placeholder="Farm Name" onChange={handleInputChange} />
-                <input type="text" name="activationCode" placeholder="Activation Code" onChange={handleInputChange} />
-                <button type="submit">Submit</button>
+            <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '400px' }}>
+                <input
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    onChange={handleInputChange}
+                    className="form-input"
+                />
+                <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    onChange={handleInputChange}
+                    className="form-input"
+                />
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    onChange={handleInputChange}
+                    className="form-input"
+                />
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    onChange={handleInputChange}
+                    className="form-input"
+                />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    onChange={handleInputChange}
+                    className="form-input"
+                />
+                <input
+                    type="text"
+                    name="phoneNumber"
+                    placeholder="Phone Number"
+                    onChange={handleInputChange}
+                    className="form-input"
+                />
+                <input
+                    type="text"
+                    name="farmName"
+                    placeholder="Farm Name"
+                    onChange={handleInputChange}
+                    className="form-input"
+                />
+                <input
+                    type="text"
+                    name="activationCode"
+                    placeholder="Activation Code"
+                    onChange={handleInputChange}
+                    className="form-input"
+                />
+                <button type="submit" className="submit-button">Submit</button>
             </form>
-            {responseMessage && <p style={{ color: 'green' }}>{responseMessage}</p>}
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+            {responseMessage && <p className="success-message">{responseMessage}</p>}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
     );
 };

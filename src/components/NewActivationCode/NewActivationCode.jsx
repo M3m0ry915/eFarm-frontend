@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import { useAuth } from '../../AuthContext.jsx';
+import './NewActivationCode.css'; // Importujemy plik CSS
 
 const NewActivationCode = () => {
     const [formData, setFormData] = useState({
@@ -77,7 +78,6 @@ const NewActivationCode = () => {
             });
 
             if (response.ok) {
-                //const data = await response.json();
                 setSuccessMessage('Activation code updated successfully.');
                 handleExpireCodeInfoUpdate(null);
                 setTimeout(() => {
@@ -93,12 +93,12 @@ const NewActivationCode = () => {
     };
 
     return (
-        <div>
+        <div className="new-activation-code-container">
             <Navbar onLogout={handleLogout} userRole={userRole} username={username} />
-            <div style={{ padding: '20px' }}>
+            <div>
                 <h2>New Activation Code</h2>
-                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+                {successMessage && <p className="success-message">{successMessage}</p>}
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label>Password:</label>
@@ -124,6 +124,5 @@ const NewActivationCode = () => {
         </div>
     );
 };
-
 
 export default NewActivationCode;

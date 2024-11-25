@@ -1,0 +1,73 @@
+/* Ogólny styl formularza rejestracji farmy */
+.signup-farm-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f0f0f0; /* Jasnoszare tło */
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 20px;
+}
+
+/* Nagłówek formularza */
+.signup-farm-container h2 {
+    color: #013220; /* Ciemnozielony nagłówek */
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* Styl formularza */
+.form-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #333;
+    border-radius: 25px;
+    background-color: #f0f0f0;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    border-color: #a8ffb3; /* Zielony kolor przy focusie */
+    outline: none;
+}
+
+/* Przycisk formularza */
+.submit-button {
+    width: 100%;
+    background-color: rgb(250, 175, 55); /* Pomarańczowy przycisk */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.submit-button:hover {
+    background-color: rgb(220, 140, 40); /* Ciemniejszy pomarańczowy */
+}
+
+/* Styl dla komunikatów o błędach */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+/* Styl dla komunikatu o sukcesie */
+.success-message {
+    color: green;
+    font-size: 14px;
+    margin-top: 20px;
+    font-weight: bold;
+}
