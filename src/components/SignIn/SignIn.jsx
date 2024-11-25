@@ -1,6 +1,7 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext.jsx';
+import './SignIn.css'; // Importujemy plik CSS
 
 const SignIn = () => {
     const { handleLogin } = useAuth();
@@ -49,7 +50,6 @@ const SignIn = () => {
 
             const data = await response.json();
 
-
             if (response.status === 403) {
                 const message = data.message || '';
                 if (message.includes('Gospodarstwo jest nieaktywne. Podaj nowy kod aktywacyjny.')) {
@@ -80,24 +80,26 @@ const SignIn = () => {
     };
 
     return (
-        <div>
+        <div className="sign-in-container">
             <h2>Sign In</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '400px' }}>
                 <input
                     type="text"
                     name="username"
                     placeholder="Username"
                     onChange={handleInputChange}
+                    className="form-input"
                 />
                 <input
                     type="password"
                     name="password"
                     placeholder="Password"
                     onChange={handleInputChange}
+                    className="form-input"
                 />
-                <button type="submit">Submit</button>
+                <button type="submit" className="submit-button">Submit</button>
             </form>
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
     );
 };

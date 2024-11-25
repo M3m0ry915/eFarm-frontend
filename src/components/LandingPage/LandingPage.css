@@ -1,0 +1,70 @@
+/* Ogólny styl strony */
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f0f0f0; /* Jasnoszare tło */
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    text-align: center;
+}
+
+/* Nagłówek */
+.landing-page h1 {
+    color: #013220; /* Ciemnozielony kolor nagłówka */
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Styl dla linków */
+.landing-page a {
+    text-decoration: none;
+    color: white;
+    background-color: rgb(250, 175, 55); /* Pomarańczowy kolor tła */
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+    margin: 10px;
+}
+
+/* Efekt na linkach przy najechaniu */
+.landing-page a:hover {
+    background-color: rgb(220, 140, 40); /* Ciemniejszy pomarańczowy kolor przy hoverze */
+    transform: scale(1.05);
+}
+
+/* Link "Sign In" - zielony kolor tła */
+.landing-page a:first-of-type {
+    background-color: #4caf50; /* Zielony kolor */
+}
+
+.landing-page a:first-of-type:hover {
+    background-color: #388e3c; /* Ciemniejszy zielony kolor przy hoverze */
+}
+
+/* Link "Create a New Farm" - niebieski kolor tła */
+.landing-page a:last-of-type {
+    background-color: #2196f3; /* Niebieski kolor */
+}
+
+.landing-page a:last-of-type:hover {
+    background-color: #1976d2; /* Ciemniejszy niebieski kolor przy hoverze */
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .landing-page h1 {
+        font-size: 28px;
+    }
+
+    .landing-page a {
+        font-size: 16px;
+        padding: 10px 25px;
+    }
+}

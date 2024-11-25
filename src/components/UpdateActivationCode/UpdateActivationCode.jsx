@@ -1,5 +1,6 @@
-import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './UpdateActivationCode.css'; // Importujemy plik CSS
 
 const UpdateActivationCode = () => {
     const [formData, setFormData] = useState({
@@ -66,24 +67,41 @@ const UpdateActivationCode = () => {
     };
 
     return (
-        <div>
-            <h2>Update Activation Code</h2>
+        <div className="update-activation-container">
+            <h2>Aktualizacja kodu aktywacyjnego</h2>
             {!successMessage ? (
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="username" placeholder="Username" onChange={handleInputChange} />
-                <input type="password" name="password" placeholder="Password" onChange={handleInputChange} />
-                <input type="text" name="newActivationCode" placeholder="New Activation Code" onChange={handleInputChange} />
-                <button type="submit">Submit</button>
-            </form>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Nazwa użytkownika"
+                        onChange={handleInputChange}
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Hasło"
+                        onChange={handleInputChange}
+                    />
+                    <input
+                        type="text"
+                        name="newActivationCode"
+                        placeholder="Nowy kod aktywacyjny"
+                        onChange={handleInputChange}
+                    />
+                    <button type="submit">Zaktualizuj kod</button>
+                </form>
             ) : (
                 <div>
-                    <p style={{ color: 'green' }}>{successMessage}</p>
-                    <button onClick={() => navigate('/sign-in')}>
+                    <p className="success-message">{successMessage}</p>
+                    <button
+                        className="sign-in-button"
+                        onClick={() => navigate('/sign-in')}>
                         Przejdź do logowania
                     </button>
                 </div>
             )}
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
     );
 };
