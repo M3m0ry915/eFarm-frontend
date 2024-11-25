@@ -14,7 +14,7 @@ html, body {
   align-items: center;
   height: 100vh; /* Wysokość widoku */
   width: 100vw; /* Szerokość widoku */
-  background-image: url('./assets/background.jpg'); /* Ścieżka do zdjęcia */
+  /*background-image: url('./assets/background.jpg'); !* Ścieżka do zdjęcia *!*/
   background-size: cover; /* Dopasowanie zdjęcia do rozmiarów ekranu */
   background-position: center; /* Wyśrodkowanie zdjęcia */
   background-repeat: no-repeat; /* Zapobieganie powtarzaniu zdjęcia */
