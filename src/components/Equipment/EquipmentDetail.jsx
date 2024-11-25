@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import { useAuth } from '../../AuthContext.jsx';
+import './EquipmentDetail.css'; // Dodanie pliku CSS dla stylów
 
 const EquipmentDetail = () => {
     const { id } = useParams();
@@ -33,7 +34,6 @@ const EquipmentDetail = () => {
             insuranceExpirationDate: '2025-06-30',
             inspectionExpireDate: '2024-06-30',
         },
-        // Dodaj pozostałe mockowane dane
     ];
 
     useEffect(() => {
@@ -94,7 +94,7 @@ const EquipmentDetail = () => {
         return (
             <div>
                 <Navbar userRole={userRole} username={username} />
-                <div style={{ padding: '20px' }}>
+                <div className="loading-container">
                     <p>Ładowanie szczegółów sprzętu...</p>
                 </div>
             </div>
@@ -117,9 +117,9 @@ const EquipmentDetail = () => {
     return (
         <div>
             <Navbar userRole={userRole} username={username} />
-            <div style={{ padding: '20px' }}>
+            <div className="detail-container">
                 <h2>Szczegóły Sprzętu</h2>
-                <div>
+                <div className="equipment-details">
                     <p>
                         <strong>Nazwa Sprzętu:</strong> {equipmentName}
                     </p>
@@ -163,7 +163,9 @@ const EquipmentDetail = () => {
                         </p>
                     )}
                 </div>
-                <button onClick={() => navigate('/equipment')}>Powrót do listy sprzętu</button>
+                <button onClick={() => navigate('/equipment')} className="back-button">
+                    Powrót do listy sprzętu
+                </button>
             </div>
         </div>
     );

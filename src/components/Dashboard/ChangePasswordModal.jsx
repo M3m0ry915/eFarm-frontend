@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import './ChangePasswordModal.css'; // Zaimportuj plik z CSS
 
 const ChangePasswordModal = ({ user, onClose }) => {
     const [newPassword, setNewPassword] = useState('');
@@ -39,22 +40,23 @@ const ChangePasswordModal = ({ user, onClose }) => {
     };
 
     return (
-        <div style={modalStyle}>
-            <div style={modalContentStyle}>
+        <div className="modal">
+            <div className="modal-content">
                 <h3>Zmień Hasło dla {user.username}</h3>
                 <form onSubmit={handleSubmit}>
-                    <div>
+                    <div className="form-group">
                         <label>Nowe Hasło:</label>
                         <input
                             type="password"
                             value={newPassword}
                             onChange={handlePasswordChange}
+                            className="form-input"
                             required
                         />
                     </div>
-                    <div style={{ marginTop: '20px' }}>
-                        <button type="submit">Zmień Hasło</button>
-                        <button type="button" onClick={onClose} style={{ marginLeft: '10px' }}>
+                    <div>
+                        <button type="submit" className="form-submit-button">Zmień Hasło</button>
+                        <button type="button" onClick={onClose} className="form-cancel-button">
                             Anuluj
                         </button>
                     </div>
@@ -62,24 +64,6 @@ const ChangePasswordModal = ({ user, onClose }) => {
             </div>
         </div>
     );
-};
-
-const modalStyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-};
-
-const modalContentStyle = {
-    backgroundColor: 'white',
-    padding: '20px',
-    width: '400px',
 };
 
 ChangePasswordModal.propTypes = {

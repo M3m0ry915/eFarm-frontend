@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import './EquipmentForm.css'; // Dodanie pliku CSS dla stylów
 
 const EquipmentForm = ({ onClose, equipmentData = null }) => {
     const [categories, setCategories] = useState([]);
@@ -36,48 +37,11 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
 
         // Mockowane dane kategorii
         const mockCategories = [
-            {
-                categoryName: 'Traktory',
-                fields: [
-                    'equipmentName',
-                    'category',
-                    'brand',
-                    'model',
-                    'power',
-                    'insurancePolicyNumber',
-                    'insuranceExpirationDate',
-                    'inspectionExpireDate',
-                ],
-            },
-            {
-                categoryName: 'Kombajny',
-                fields: [
-                    'equipmentName',
-                    'category',
-                    'brand',
-                    'model',
-                    'capacity',
-                    'insurancePolicyNumber',
-                    'insuranceExpirationDate',
-                    'inspectionExpireDate',
-                ],
-            },
-            {
-                categoryName: 'Pługi',
-                fields: [
-                    'equipmentName',
-                    'category',
-                    'brand',
-                    'model',
-                    'workingWidth',
-                    'insurancePolicyNumber',
-                    'insuranceExpirationDate',
-                    'inspectionExpireDate',
-                ],
-            },
+            { categoryName: 'Traktory', fields: ['equipmentName', 'category', 'brand', 'model', 'power'] },
+            { categoryName: 'Kombajny', fields: ['equipmentName', 'category', 'brand', 'model', 'capacity'] },
+            { categoryName: 'Pługi', fields: ['equipmentName', 'category', 'brand', 'model', 'workingWidth'] },
             // Dodaj więcej kategorii według potrzeb
         ];
-
         setCategories(mockCategories);
     }, []);
 
@@ -120,7 +84,6 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
         e.preventDefault();
         //const method = equipmentData ? 'PUT' : 'POST';
         //const url = equipmentData ? `/api/equipment/${equipmentData.equipmentId}`: '/api/equipment/new';
-
         try {
             // Oryginalny kod wysyłający dane do backendu
             /*
@@ -152,14 +115,19 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
     };
 
     return (
-        <div style={modalStyle}>
-            <div style={modalContentStyle}>
+        <div className="modal">
+            <div className="modal-content">
                 <h2>{equipmentData ? 'Edytuj Sprzęt' : 'Dodaj Nowy Sprzęt'}</h2>
                 <form onSubmit={handleSubmit}>
                     {!equipmentData && (
                         <div>
                             <label>Kategoria:</label>
-                            <select value={selectedCategory} onChange={handleCategoryChange} required>
+                            <select
+                                value={selectedCategory}
+                                onChange={handleCategoryChange}
+                                required
+                                className="form-select"
+                            >
                                 <option value="">Wybierz kategorię</option>
                                 {categories.map((category) => (
                                     <option key={category.categoryName} value={category.categoryName}>
@@ -167,32 +135,28 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
                                     </option>
                                 ))}
                             </select>
-                            <div style={{marginTop: '20px'}}>
-                                <button type="button" onClick={onClose}>
-                                    Anuluj
-                                </button>
-                            </div>
                         </div>
                     )}
                     {selectedCategory && (
                         <>
                             {fields.map((field) => (
-                                <div key={field}>
-                                <label>{field}:</label>
+                                <div key={field} className="form-group">
+                                    <label>{field}:</label>
                                     <input
                                         type="text"
                                         name={field}
                                         value={formData[field] || ''}
                                         onChange={handleInputChange}
                                         required={field === 'equipmentName' || field === 'brand' || field === 'model'}
+                                        className="form-input"
                                     />
                                 </div>
                             ))}
-                            <div style={{ marginTop: '20px' }}>
-                                <button type="submit">
+                            <div className="form-buttons">
+                                <button type="submit" className="form-submit-button">
                                     {equipmentData ? 'Zapisz Zmiany' : 'Dodaj Sprzęt'}
                                 </button>
-                                <button type="button" onClick={onClose} style={{ marginLeft: '10px' }}>
+                                <button type="button" onClick={onClose} className="form-cancel-button">
                                     Anuluj
                                 </button>
                             </div>
@@ -202,26 +166,6 @@ const EquipmentForm = ({ onClose, equipmentData = null }) => {
             </div>
         </div>
     );
-};
-
-const modalStyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-};
-
-const modalContentStyle = {
-    backgroundColor: 'white',
-    padding: '20px',
-    width: '500px',
-    maxHeight: '80%',
-    overflowY: 'auto',
 };
 
 EquipmentForm.propTypes = {

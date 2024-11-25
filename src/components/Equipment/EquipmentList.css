@@ -92,19 +92,22 @@ h2 {
     margin-top: 20px;
 }
 
+/* Nagłówek tabeli */
 .table-header {
-    background-color: #013220; /* Ciemnozielone tło dla nagłówków tabeli */
+    background-color: #013220;
     color: white;
     padding: 12px 15px;
-    text-align: left;
+    text-align: center; /* Wyśrodkowanie tekstu w nagłówkach */
     font-weight: bold;
     text-transform: uppercase;
 }
 
+/* Komórki tabeli */
 .table-cell {
     padding: 12px 15px;
-    border-bottom: 1px solid #ddd; /* Szara ramka pod komórkami tabeli */
-    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    text-align: center; /* Wyśrodkowanie tekstu w komórkach */
+    transition: color 0.3s, border-color 0.3s;
 }
 
 /* Styl przycisku do edytowania sprzętu */

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import './EditUserModal.css'; // Zaimportuj plik z CSS
 
 const EditUserModal = ({ user, onClose }) => {
     const [formData, setFormData] = useState({
@@ -49,55 +50,60 @@ const EditUserModal = ({ user, onClose }) => {
     };
 
     return (
-        <div style={modalStyle}>
-            <div style={modalContentStyle}>
+        <div className="modal">
+            <div className="modal-content">
                 <h3>Edytuj Użytkownika {user.username}</h3>
                 <form onSubmit={handleSubmit}>
-                    <div>
+                    <div className="form-group">
                         <label>Imię:</label>
                         <input
                             type="text"
                             name="firstName"
                             value={formData.firstName}
                             onChange={handleInputChange}
+                            className="form-input"
                             required
                         />
                     </div>
-                    <div>
+                    <div className="form-group">
                         <label>Nazwisko:</label>
                         <input
                             type="text"
                             name="lastName"
                             value={formData.lastName}
                             onChange={handleInputChange}
+                            className="form-input"
                             required
                         />
                     </div>
-                    <div>
+                    <div className="form-group">
                         <label>Email:</label>
                         <input
                             type="email"
                             name="email"
                             value={formData.email}
                             onChange={handleInputChange}
+                            className="form-input"
                             required
                         />
                     </div>
-                    <div>
+                    <div className="form-group">
                         <label>Numer Telefonu:</label>
                         <input
                             type="text"
                             name="phoneNumber"
                             value={formData.phoneNumber}
                             onChange={handleInputChange}
+                            className="form-input"
                         />
                     </div>
-                    <div>
+                    <div className="form-group">
                         <label>Rola:</label>
                         <select
                             name="role"
                             value={formData.role}
                             onChange={handleInputChange}
+                            className="form-select"
                             required
                         >
                             <option value="">Wybierz rolę</option>
@@ -106,36 +112,14 @@ const EditUserModal = ({ user, onClose }) => {
                             <option value="ROLE_FARM_EQUIPMENT_OPERATOR">Operator Sprzętu</option>
                         </select>
                     </div>
-                    <div style={{ marginTop: '20px' }}>
-                        <button type="submit">Zapisz Zmiany</button>
-                        <button type="button" onClick={onClose} style={{ marginLeft: '10px' }}>
-                            Anuluj
-                        </button>
+                    <div>
+                        <button type="submit" className="form-submit-button">Zapisz Zmiany</button>
+                        <button type="button" onClick={onClose} className="form-cancel-button">Anuluj</button>
                     </div>
                 </form>
             </div>
         </div>
     );
-};
-
-const modalStyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-};
-
-const modalContentStyle = {
-    backgroundColor: 'white',
-    padding: '20px',
-    width: '500px',
-    maxHeight: '80%',
-    overflowY: 'auto',
 };
 
 EditUserModal.propTypes = {

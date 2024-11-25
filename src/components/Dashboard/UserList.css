@@ -1,0 +1,99 @@
+/* Globalne tło strony */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Nagłówek strony */
+h3 {
+    color: #013220;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Kontener dla listy użytkowników */
+.user-list-container {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+/* Stylowanie tabeli */
+.user-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Nagłówek tabeli */
+.table-header {
+    background-color: #013220;
+    color: white;
+    padding: 12px 15px;
+    text-align: center; /* Wyśrodkowanie tekstu w nagłówkach */
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Komórki tabeli */
+.table-cell {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: center; /* Wyśrodkowanie tekstu w komórkach */
+}
+
+/* Styl przycisków akcji */
+.action-button {
+    background-color: rgb(250, 175, 55);
+    color: white;
+    border-radius: 5px;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+    text-align: center; /* Wyśrodkowanie tekstu w przyciskach */
+}
+
+
+/* Efekt podkreślenia przy najechaniu na przycisk */
+.action-button:hover {
+    background-color: rgb(220, 140, 40);
+}
+
+/* Styl dla wiersza tabeli */
+.table-row:hover {
+    background-color: #f9f9f9;
+}
+
+/* Efekt po kliknięciu na wiersz */
+.table-cell.active {
+    color: #a8ffb3;
+    font-weight: bold;
+    border-bottom: 2px solid #a8ffb3;
+}
+
+/* Stylowanie inputa do wyszukiwania */
+.search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #333;
+    border-radius: 25px;
+    background-color: #f0f0f0;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s;
+}
+
+/* Styl po kliknięciu (focus) na pole wyszukiwania */
+.search-input:focus {
+    border-color: #a8ffb3;
+    outline: none;
+}
