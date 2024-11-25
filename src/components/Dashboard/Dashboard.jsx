@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import Navbar from '../Navbar/Navbar';
 import { useAuth } from '../../AuthContext.jsx';
 import UserList from './UserList';
+import LandParcelList from '../AddLandParcel/LandParcelList';
 
 const Dashboard = () => {
     const { user, expireCodeInfo, handleLogout, handleExpireCodeInfoUpdate } = useAuth();
@@ -54,9 +55,12 @@ const Dashboard = () => {
                 <div style={segmentStyle}>
                     <UserList/>
                 </div>
-                {/* Segmenty 2-4: Możesz dodać je później */}
-                {/* <div style={segmentStyle}>Segment 2</div>
-                <div style={segmentStyle}>Segment 3</div>
+                {/* Segment 2: Lista działek */}
+                <div style={segmentStyle}>
+                    <LandParcelList />
+                </div>
+                {/* Segmenty 3-4: Możesz dodać je później */}
+                {/* <div style={segmentStyle}>Segment 3</div>
                 <div style={segmentStyle}>Segment 4</div> */}
             </div>
         </div>
