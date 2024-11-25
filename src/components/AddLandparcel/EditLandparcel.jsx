@@ -66,8 +66,10 @@ const EditLandparcel = ({ onClose, parcelData }) => {
                         <ParcelForm parcelData={selectedParcel} onChange={setSelectedParcel} isEditMode={true} />
                         {selectedParcel && (
                             <div style={{ marginTop: '20px' }}>
-                                <button onClick={handleSubmit}>Zapisz Zmiany</button>
-                                <button onClick={onClose} style={{ marginLeft: '10px' }}>
+                                <button onClick={handleSubmit} className="form-submit-button">
+                                    Zapisz Zmiany
+                                </button>
+                                <button onClick={onClose} className="form-cancel-button" style={{ marginLeft: '10px' }}>
                                     Anuluj
                                 </button>
                             </div>

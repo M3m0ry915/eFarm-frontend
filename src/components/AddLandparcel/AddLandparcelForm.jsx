@@ -1,6 +1,5 @@
-// ParcelForm.jsx
-
 import PropTypes from 'prop-types';
+import './AddLandparcelForm.css';
 
 export function ParcelForm({ parcelData, onChange, isEditMode }) {
     if (!parcelData) {

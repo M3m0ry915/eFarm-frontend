@@ -124,8 +124,10 @@ const AddLandparcel = ({ onClose }) => {
                         <ParcelForm parcelData={selectedParcel} onChange={setSelectedParcel} isEditMode={false} />
                         {selectedParcel && (
                             <div style={{ marginTop: '20px' }}>
-                                <button onClick={handleSubmit}>Dodaj Działkę</button>
-                                <button onClick={onClose} style={{ marginLeft: '10px' }}>
+                                <button onClick={handleSubmit} className="form-submit-button">
+                                    Dodaj Działkę
+                                </button>
+                                <button onClick={onClose} className="form-cancel-button" style={{ marginLeft: '10px' }}>
                                     Anuluj
                                 </button>
                             </div>

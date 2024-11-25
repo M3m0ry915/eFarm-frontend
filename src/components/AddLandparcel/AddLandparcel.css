@@ -17,3 +17,26 @@
 .map-wrapper {
   flex: 3; 
 }
+
+/* Styl przycisków formularza */
+.form-submit-button,
+.form-cancel-button {
+  background-color: rgb(250, 175, 55);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-submit-button:hover,
+.form-cancel-button:hover {
+  background-color: rgb(220, 140, 40);
+}
+
+/* Styl dla przycisku anulowania */
+.form-cancel-button {
+  background-color: #ddd;
+  margin-left: 10px;
+}

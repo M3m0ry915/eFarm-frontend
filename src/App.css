@@ -38,7 +38,7 @@ h1 {
 
 /* Stylizacja dla przycisków */
 button {
-  background-color: yellow; /* Żółte tło przycisków */
+  /*background-color: yellow; !* Żółte tło przycisków *!*/
   color: black;
   font-size: 1.2rem;
   padding: 10px 20px;
@@ -50,7 +50,7 @@ button {
 
 /* Efekt hover dla przycisków */
 button:hover {
-  background-color: orange;
+  /*background-color: orange;*/
   color: white;
 }
 

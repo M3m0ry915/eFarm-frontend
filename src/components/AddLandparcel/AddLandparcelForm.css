@@ -1,0 +1,76 @@
+/* Ogólny kontener formularza */
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #ffffff; /* Białe tło formularza */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Delikatny cień */
+    font-family: 'Arial', sans-serif;
+
+}
+
+/* Stylizacja dla pól formularza */
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #013220; /* Zielony odcień dla etykiet */
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #f9f9f9; /* Jasne tło */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 2px solid #333;
+    border-radius: 25px;
+    background-color: #f0f0f0;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s;
+}
+
+/* Efekt focus na polach */
+input:focus, select:focus {
+    border-color: #4CAF50; /* Zielony obrys */
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Zielony cień */
+    background-color: #ffffff; /* Zmiana tła na białe */
+    outline: none;
+}
+
+/* Stylizacja dla pól tylko do odczytu */
+input[readonly], select[disabled] {
+    background-color: #f4f4f4; /* Szare tło dla pól tylko do odczytu */
+    border-color: #ddd; /* Jaśniejsze krawędzie */
+    color: #666; /* Przygaszony tekst */
+    cursor: not-allowed;
+}
+
+/* Responsywność dla mniejszych ekranów */
+@media (max-width: 600px) {
+    form {
+        padding: 15px;
+    }
+
+    label {
+        font-size: 13px;
+    }
+
+    input, select {
+        font-size: 13px;
+        padding: 8px;
+    }
+}
