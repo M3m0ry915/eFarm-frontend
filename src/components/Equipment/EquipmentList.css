@@ -1,0 +1,169 @@
+/* Globalne tło strony */
+body {
+
+    font-family: Arial, sans-serif;
+    color: #333; /* Ciemnoszary kolor tekstu dla lepszej czytelności */
+    margin: 0;
+    padding: 0;
+}
+
+/* Nagłówek strony */
+h2 {
+    color: #013220; /* Kolor tekstu nagłówka w ciemnozielonym */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Kontener dla listy sprzętu */
+.equipment-list-container {
+    padding: 20px;
+    background-color: white; /* Tło białe dla kontenera */
+    border-radius: 8px; /* Zaokrąglone rogi */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Cień wokół kontenera */
+    margin: 20px auto; /* Centrowanie kontenera */
+    max-width: 1200px; /* Maksymalna szerokość kontenera */
+}
+
+/* Stylowanie przycisków */
+.navbar-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    position: relative; /* Wymagane do działania ::after */
+    transition: color 0.3s;
+    margin: 5px;
+}
+
+/* Efekt podkreślenia przy najechaniu */
+.navbar-button:hover {
+    color: #a8ffb3; /* Zmieniamy kolor tekstu na jasnozielony */
+}
+
+.navbar-button:hover::after {
+    width: 100%; /* W pełni rozciągamy linię pod przyciskiem */
+}
+
+/* Styl przycisku do dodawania sprzętu */
+.add-equipment-button {
+    background-color: rgb(250, 175, 55); /* Pomarańczowy kolor tła */
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: white; /* Biały kolor tekstu */
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Animacja przejścia */
+}
+
+/* Efekt podkreślenia przy najechaniu na przycisk dodaj sprzęt */
+.add-equipment-button:hover {
+    background-color: rgb(220, 140, 40); /* Ciemniejszy odcień pomarańczowego przy najechaniu */
+    color: white; /* Pozostawiamy tekst w kolorze białym */
+}
+
+/* Stylowanie inputa do wyszukiwania */
+.search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #333; /* Ciemnoszara ramka */
+    border-radius: 25px; /* Zaokrąglone rogi dla prostokąta */
+    background-color: #f0f0f0; /* Jasnoszare tło */
+    font-size: 16px;
+    color: #333; /* Ciemnoszary kolor tekstu */
+    transition: border-color 0.3s;
+}
+
+/* Styl po kliknięciu (focus) na pole wyszukiwania */
+.search-input:focus {
+    border-color: #a8ffb3; /* Kolor ramki na jasnozielony przy focusie */
+    outline: none;
+}
+
+
+/* Styl tabeli */
+.equipment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table-header {
+    background-color: #013220; /* Ciemnozielone tło dla nagłówków tabeli */
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.table-cell {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd; /* Szara ramka pod komórkami tabeli */
+    cursor: pointer;
+}
+
+/* Styl przycisku do edytowania sprzętu */
+.edit-button {
+    background-color: rgb(250, 175, 55); /* Pomarańczowy kolor tła */
+    color: white; /* Biały kolor tekstu */
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Animacja przejścia */
+}
+
+/* Efekt przy najechaniu na przycisk edytuj */
+.edit-button:hover {
+    background-color: rgb(220, 140, 40); /* Ciemniejszy odcień pomarańczowego przy hoverze */
+    color: white; /* Pozostawiamy tekst w kolorze białym */
+}
+
+/* Styl dla wiersza tabeli */
+.table-cell {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+/* Efekt po kliknięciu na wiersz */
+.table-cell.active {
+    color: #a8ffb3; /* Zmieniamy kolor na jasnozielony */
+    font-weight: bold; /* Pogrubiamy tekst po kliknięciu */
+    border-bottom: 2px solid #a8ffb3; /* Dodajemy podkreślenie */
+}
+
+/* Linki w navbarze */
+.navbar-link {
+    color: white; /* Biały kolor linków w navbarze */
+    text-decoration: none;
+}
+
+.navbar-link:hover {
+    color: #a8ffb3; /* Zmieniamy kolor na jasnozielony przy najechaniu */
+}
+
+/* Stylowanie ikon przycisków w navbarze */
+.navbar-button,
+.add-equipment-button,
+.edit-button {
+    transition: all 0.3s ease;
+}
+
+/* Globalny styl dla nagłówków */
+h1, h2, h3 {
+    color: #013220; /* Ciemnozielony kolor nagłówków */
+}
+
+/* Kolor tła dla sekcji formularza */
+.equipment-form-container {
+    background-color: white; /* Tło białe dla formularza */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Cień wokół formularza */
+}

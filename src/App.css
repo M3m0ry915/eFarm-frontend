@@ -14,6 +14,7 @@ html, body {
   align-items: center;
   height: 100vh; /* Wysokość widoku */
   width: 100vw; /* Szerokość widoku */
+  background-color: #f4f4f4; /* Jasnoszare tło dla całej strony */
   /*background-image: url('./assets/background.jpg'); !* Ścieżka do zdjęcia *!*/
   background-size: cover; /* Dopasowanie zdjęcia do rozmiarów ekranu */
   background-position: center; /* Wyśrodkowanie zdjęcia */

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import { useAuth } from '../../AuthContext.jsx';
 import EquipmentForm from './EquipmentForm';
+import './EquipmentList.css';  // Dodanie pliku CSS
 
 const EquipmentList = () => {
     const [equipmentList, setEquipmentList] = useState([]);
@@ -94,7 +95,6 @@ const EquipmentList = () => {
         }
     };
     */
-
     const handleSearchChange = (e) => {
         const query = e.target.value;
         setSearchQuery(query);
@@ -132,9 +132,9 @@ const EquipmentList = () => {
     return (
         <div>
             <Navbar userRole={userRole} username={username} />
-            <div style={{ padding: '20px' }}>
+            <div className="equipment-list-container">
                 <h2>Lista Sprzętu</h2>
-                <button onClick={handleAddEquipment} style={{ marginBottom: '10px' }}>
+                <button onClick={handleAddEquipment} className="navbar-button add-equipment-button">
                     Dodaj Sprzęt
                 </button>
                 <input
@@ -142,39 +142,32 @@ const EquipmentList = () => {
                     placeholder="Wyszukaj (minimum 3 znaki)"
                     value={searchQuery}
                     onChange={handleSearchChange}
-                    style={{ width: '100%', padding: '8px', marginBottom: '20px' }}
+                    className="search-input"
                 />
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <table className="equipment-table">
                     <thead>
                     <tr>
-                        <th style={tableHeaderStyle}>Nazwa Sprzętu</th>
-                        <th style={tableHeaderStyle}>Kategoria</th>
-                        <th style={tableHeaderStyle}>Marka</th>
-                        <th style={tableHeaderStyle}>Model</th>
-                        <th style={tableHeaderStyle}>Akcje</th>
+                        <th className="table-header">Nazwa Sprzętu</th>
+                        <th className="table-header">Kategoria</th>
+                        <th className="table-header">Marka</th>
+                        <th className="table-header">Model</th>
+                        <th className="table-header">Akcje</th>
                     </tr>
                     </thead>
                     <tbody>
                     {equipmentList.map((equipment) => (
                         <tr key={equipment.equipmentId}>
                             <td
-                                style={tableCellStyle}
-                                data-label="Nazwa Sprzętu"
+                                className="table-cell"
                                 onClick={() => handleEquipmentClick(equipment.equipmentId)}
                             >
                                 {equipment.equipmentName}
                             </td>
-                            <td style={tableCellStyle} data-label="Kategoria">
-                                {equipment.category}
-                            </td>
-                            <td style={tableCellStyle} data-label="Marka">
-                                {equipment.brand}
-                            </td>
-                            <td style={tableCellStyle} data-label="Model">
-                                {equipment.model}
-                            </td>
-                            <td style={tableCellStyle}>
-                                <button onClick={() => handleEditEquipment(equipment)}>
+                            <td className="table-cell">{equipment.category}</td>
+                            <td className="table-cell">{equipment.brand}</td>
+                            <td className="table-cell">{equipment.model}</td>
+                            <td className="table-cell">
+                                <button onClick={() => handleEditEquipment(equipment)} className="navbar-button edit-button">
                                     Edytuj
                                 </button>
                             </td>
@@ -188,18 +181,6 @@ const EquipmentList = () => {
             </div>
         </div>
     );
-};
-
-const tableHeaderStyle = {
-    borderBottom: '2px solid #ddd',
-    padding: '8px',
-    textAlign: 'left',
-};
-
-const tableCellStyle = {
-    borderBottom: '1px solid #ddd',
-    padding: '8px',
-    cursor: 'pointer',
 };
 
 export default EquipmentList;
